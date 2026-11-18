@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#3b1d85">
+<title>Offline - SamajBook</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;text-align:center;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#fdf9f3;color:#2a1560}
+  .card{max-width:360px;background:#fff;border-radius:28px;padding:36px 28px;box-shadow:0 20px 50px -20px rgba(59,29,133,.35)}
+  .logo{width:84px;height:84px;margin:0 auto 20px;border-radius:24px;background:linear-gradient(135deg,#5a2fc2,#2a1560);display:grid;place-items:center;color:#f5c542;font:700 34px Georgia,serif}
+  h1{margin:0 0 8px;font-size:22px}
+  p{margin:0 0 24px;color:#6b5a99;line-height:1.5}
+  button{border:0;border-radius:999px;padding:14px 28px;font-size:15px;font-weight:600;color:#fff;background:linear-gradient(135deg,#5a2fc2,#3b1d85);cursor:pointer}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">SB</div>
+  <h1>You are offline</h1>
+  <p>Please check your internet connection. SamajBook will be back as soon as you are online.</p>
+  <button onclick="location.reload()">Try again</button>
+</div>
+</body>
+</html>

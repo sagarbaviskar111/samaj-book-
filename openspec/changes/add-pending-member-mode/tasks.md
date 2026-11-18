@@ -1,0 +1,6 @@
+- [x] User::isPending and EnsureActive whitelist (PENDING_ALLOWED)
+- [x] Register/login/dev-login redirect pending to home
+- [x] FeedController: members-only posts, news/poster stories, no events query for pending
+- [x] Read-only post partial, feed index, global banner, nav, profile simplification
+- [x] NewsController hides event items from pending
+- [x] Tests: tests/Feature/Auth/PendingMemberTest.php; older redirect assertions updated
