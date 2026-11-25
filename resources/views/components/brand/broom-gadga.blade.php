@@ -1,7 +1,7 @@
 @props(['show' => 'both'])
 {{-- Sant Gadge Maharaj symbols: the broom (safai) and the earthen pot "gadga". Uses currentColor for strokes; accents in marigold.
      show = both | broom | gadga --}}
-<svg viewBox="0 0 {{ $show === 'both' ? 120 : 64 }} 80" role="img" aria-label="झाड़ू और गडगा" {{ $attributes->class(['block']) }}>
+<svg viewBox="0 0 {{ $show === 'both' ? 120 : 64 }} 80" role="img" aria-label="{{ __('झाड़ू और गडगा') }}" {{ $attributes->class(['block']) }}>
     @if($show !== 'gadga')
         <g @if($show === 'both') transform="translate(0 0)" @endif>
             <path d="M46 6L24 50" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>

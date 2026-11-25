@@ -10,7 +10,7 @@
         @csrf
         @foreach($labels as $key => $label)
             <label class="flex cursor-pointer items-center justify-between gap-3 px-4 py-4">
-                <span class="text-base font-semibold text-ink-800">{{ ['like' => 'मेरी पोस्ट पर लाइक', 'comment' => 'मेरी पोस्ट पर कमेंट', 'interest' => 'रिश्ते की पसंद और जवाब', 'new_biodata_area' => 'मेरे इलाके के नए बायोडाटा', 'news' => 'समाचार, पोस्टर और कार्यक्रम', 'system' => 'अकाउंट और दूसरी सूचनाएँ'][$key] ?? $label }}</span>
+                <span class="text-base font-semibold text-ink-800">{{ ['like' => __('मेरी पोस्ट पर लाइक'), 'comment' => __('मेरी पोस्ट पर कमेंट'), 'interest' => __('रिश्ते की पसंद और जवाब'), 'new_biodata_area' => __('मेरे इलाके के नए बायोडाटा'), 'news' => __('समाचार, पोस्टर और कार्यक्रम'), 'system' => __('अकाउंट और दूसरी सूचनाएँ')][$key] ?? $label }}</span>
                 <input type="checkbox" name="prefs[{{ $key }}]" value="1" class="peer sr-only" @checked($prefs[$key])>
                 <span class="relative h-7 w-12 shrink-0 rounded-full bg-ink-100 transition peer-checked:bg-kumkum-600 after:absolute after:left-0.5 after:top-0.5 after:h-6 after:w-6 after:rounded-full after:bg-white after:shadow after:transition peer-checked:after:translate-x-5"></span>
             </label>

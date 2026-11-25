@@ -489,3 +489,7 @@ html[data-fs="3"] .mb-header .mb-fs-btn { min-width: 2.25rem; }
 .em-steps li::before { content: counter(s); display: grid; height: 1.9rem; width: 1.9rem; flex: none; place-items: center; border-radius: 9999px; background: var(--color-kumkum-600); font-weight: 800; color: #fff; }
 .em-act { display: flex; min-height: 3.25rem; width: 100%; align-items: center; justify-content: center; gap: .5rem; border-radius: 1rem; border: 2px solid var(--color-sandal); background: #fff; padding: .25rem .75rem; font-size: 1.0625rem; font-weight: 700; color: var(--color-ink-800); }
 .em-act:hover { border-color: var(--color-ink-300); background: var(--color-ink-50); }
+
+
+/* Performance: decorative falling/rising particle animations are disabled site-wide. */
+.mb-petals, .hr-petal, .hr-bubble, .bd-confetti { display: none !important; animation: none !important; }

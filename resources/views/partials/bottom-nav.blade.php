@@ -12,7 +12,7 @@
         $items = array_values(array_filter($items, fn ($i) => in_array($i['route'], ['home', 'notifications.index', 'profile.show'], true)));
     }
 @endphp
-<nav class="mb-navbar safe-bottom fixed inset-x-0 bottom-0 z-40 lg:hidden" aria-label="Main">
+<nav class="mb-navbar safe-bottom fixed inset-x-0 bottom-0 z-40 lg:hidden" aria-label="{{ __('Main') }}">
     <ul class="mx-auto grid max-w-2xl {{ $navPending ? 'grid-cols-3' : 'grid-cols-5' }} items-end px-1 pt-1.5">
         @foreach($items as $i)
             @php($has = \Illuminate\Support\Facades\Route::has($i['route']))

@@ -23,6 +23,6 @@ class LookingForProfile extends Model
     /** Label without the Hindi part, for sentences. */
     public function forWhomLabel(): string
     {
-        return trim(explode(' (', self::FOR_WHOM[$this->for_whom] ?? $this->for_whom)[0]);
+        return __(trim(explode(' (', self::FOR_WHOM[$this->for_whom] ?? $this->for_whom)[0]));
     }
 }

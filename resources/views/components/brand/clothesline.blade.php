@@ -9,7 +9,7 @@
         ['name' => 'अमित', 'age' => 27, 'meta' => 'व्यापारी · इंदौर', 'tone' => 'from-tulsi-500 to-gold-300', 'ok' => true],
     ];
 @endphp
-<div {{ $attributes->class(['relative mx-auto w-full max-w-xl select-none pt-3']) }} role="img" aria-label="कपड़े सुखाने की रस्सी पर टँगे बायोडाटा कार्ड">
+<div {{ $attributes->class(['relative mx-auto w-full max-w-xl select-none pt-3']) }} role="img" aria-label="{{ __('कपड़े सुखाने की रस्सी पर टँगे बायोडाटा कार्ड') }}">
     {{-- rope --}}
     <svg viewBox="0 0 100 12" preserveAspectRatio="none" class="absolute inset-x-0 top-0 h-3 w-full text-gold-200" aria-hidden="true">
         <path d="M0 3Q50 11 100 3" fill="none" stroke="currentColor" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
@@ -30,8 +30,8 @@
                         @endif
                     </div>
                     <div class="px-1.5 py-1.5 text-center sm:px-2 sm:py-2">
-                        <div class="font-display text-[13px] font-bold leading-[1.6] sm:text-base">{{ $c['name'] }}, {{ $c['age'] }}</div>
-                        <div class="hidden truncate text-[11px] leading-snug text-ink-600 sm:block">{{ $c['meta'] }}</div>
+                        <div class="font-display text-[13px] font-bold leading-[1.6] sm:text-base">{{ __($c['name']) }}, {{ $c['age'] }}</div>
+                        <div class="hidden truncate text-[11px] leading-snug text-ink-600 sm:block">{{ __($c['meta']) }}</div>
                     </div>
                 </div>
             </div>

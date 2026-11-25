@@ -9,7 +9,7 @@ class DemoSubAdminSeeder extends Seeder
 {
     public function run(): void
     {
-        foreach ([['9888888801', 'Nagpur'], ['9888888802', 'Pune']] as [$phone, $area]) {
+        foreach ([['9888888801', 'Nashik'], ['9888888802', 'Pune']] as [$phone, $area]) {
             $u = User::firstOrNew(['phone' => $phone]);
             $u->forceFill([
                 'name' => "Sub-admin {$area}",

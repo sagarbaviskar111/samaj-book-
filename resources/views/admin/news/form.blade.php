@@ -63,7 +63,7 @@
                 <span id="pv-noimg" class="{{ $item->image ? 'hidden' : '' }} font-display text-3xl font-bold text-ink-300">{{ __('No image') }}</span>
             </div>
             <div class="p-4">
-                <span id="pv-type" class="badge-ink">{{ ucfirst(old('type', $item->type ?: 'news')) }}</span>
+                <span id="pv-type" class="badge-ink">{{ __(ucfirst(old('type', $item->type ?: 'news'))) }}</span>
                 <h3 id="pv-title" class="mt-2 font-display text-xl font-bold text-ink-900">{{ old('title', $item->title) ?: __('Your title appears here') }}</h3>
                 <p id="pv-event" class="mt-1 text-xs font-semibold text-gold-600"></p>
                 <p id="pv-body" class="mt-2 line-clamp-5 whitespace-pre-line text-sm text-ink-700">{{ old('body', $item->body) }}</p>
@@ -78,7 +78,7 @@
 function admPrev(){
     var g = function(id){ return document.getElementById(id); };
     var t = document.querySelector('input[name=type]:checked');
-    g('pv-type').textContent = t ? t.value.charAt(0).toUpperCase() + t.value.slice(1) : '';
+    g('pv-type').textContent = t ? t.nextElementSibling.textContent : '';
     g('pv-title').textContent = g('title').value || @json(__('Your title appears here'));
     g('pv-body').textContent = g('body').value;
     var ev = [g('event_at').value ? g('event_at').value.replace('T', ' ') : '', g('event_place').value].filter(Boolean).join(' · ');

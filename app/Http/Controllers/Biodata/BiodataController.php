@@ -25,7 +25,7 @@ class BiodataController extends Controller
     public function create(Request $request)
     {
         if ($request->user()->biodatas()->count() >= self::MAX_PER_USER) {
-            return redirect()->route('biodata.mine')->with('status', 'आप ज़्यादा से ज़्यादा '.self::MAX_PER_USER.' बायोडाटा बना सकते हैं।');
+            return redirect()->route('biodata.mine')->with('status', __('आप ज़्यादा से ज़्यादा :n बायोडाटा बना सकते हैं।', ['n' => self::MAX_PER_USER]));
         }
 
         return view('biodata.create', ['biodata' => new Biodata(['added_by' => 'self', 'marital_status' => 'never_married', 'photo_privacy' => 'members', 'income_private' => true])]);
@@ -41,7 +41,7 @@ class BiodataController extends Controller
         $biodata->save();
 
         return redirect()->route('biodata.edit', [$biodata, 'step' => 'photos'])
-            ->with('status', $request->isDraft() ? 'ड्राफ़्ट सेव हो गया। अब फ़ोटो जोड़िए।' : 'बायोडाटा मंज़ूरी के लिए भेज दिया गया। इसे पूरा करने के लिए फ़ोटो जोड़िए।');
+            ->with('status', $request->isDraft() ? __('ड्राफ़्ट सेव हो गया। अब फ़ोटो जोड़िए।') : __('बायोडाटा मंज़ूरी के लिए भेज दिया गया। इसे पूरा करने के लिए फ़ोटो जोड़िए।'));
     }
 
     public function show(Request $request, Biodata $biodata)
@@ -50,15 +50,8 @@ class BiodataController extends Controller
         abort_unless(BiodataAccess::canView($user, $biodata), 404);
 
         if (! BiodataAccess::isOwner($user, $biodata) && AccessLevel::isLite($user)) {
-            // Limited mode: only photo + first name + age are ever passed to the view.
-            $biodata->load('primaryPhoto');
-
-            return view('biodata.show-lite', [
-                'biodata' => $biodata,
-                'first' => explode(' ', trim($biodata->name))[0] ?? $biodata->name,
-                'age' => $biodata->dob->age,
-                'photoMode' => BiodataAccess::photoMode($user, $biodata),
-            ]);
+            // No biodata of anyone else is ever shown until the member creates their own.
+            return redirect()->route('biodata.index', ['for' => $biodata->gender === 'male' ? 'groom' : 'bride']);
         }
 
         $biodata->load('photos');
@@ -110,8 +103,8 @@ class BiodataController extends Controller
         $biodata->save();
 
         return redirect()->route('biodata.mine')->with('status', $biodata->status === 'pending'
-            ? 'सेव हो गया। आपका बायोडाटा एडमिन की मंज़ूरी का इंतज़ार कर रहा है।'
-            : 'बायोडाटा अपडेट हो गया।');
+            ? __('सेव हो गया। आपका बायोडाटा एडमिन की मंज़ूरी का इंतज़ार कर रहा है।')
+            : __('बायोडाटा अपडेट हो गया।'));
     }
 
     /** Owner actions: pause | resume | married */
@@ -127,11 +120,11 @@ class BiodataController extends Controller
         } elseif ($action === 'married' && in_array($biodata->status, ['approved', 'paused', 'pending'], true)) {
             $biodata->status = 'married';
         } else {
-            return back()->with('status', 'इस बायोडाटा पर यह काम अभी नहीं हो सकता।');
+            return back()->with('status', __('इस बायोडाटा पर यह काम अभी नहीं हो सकता।'));
         }
         $biodata->save();
 
-        return back()->with('status', 'बायोडाटा की स्थिति बदल गई।');
+        return back()->with('status', __('बायोडाटा की स्थिति बदल गई।'));
     }
 
     public function destroy(Request $request, Biodata $biodata): RedirectResponse
@@ -141,6 +134,6 @@ class BiodataController extends Controller
         Storage::disk('public')->deleteDirectory("biodata/{$biodata->id}");
         $biodata->delete();
 
-        return redirect()->route('biodata.mine')->with('status', 'बायोडाटा हटा दिया गया।');
+        return redirect()->route('biodata.mine')->with('status', __('बायोडाटा हटा दिया गया।'));
     }
 }

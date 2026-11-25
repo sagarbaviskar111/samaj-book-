@@ -33,30 +33,30 @@ class InterestService
         if (! $from) {
             throw new DomainException(
                 Biodata::approved()->where('user_id', $user->id)->exists()
-                    ? 'पहले अपना मंज़ूर बायोडाटा चुनिए।'
-                    : 'पसंद भेजने के लिए पहले अपना बायोडाटा बनाइए और उसके मंज़ूर होने का इंतज़ार कीजिए।'
+                    ? __('पहले अपना मंज़ूर बायोडाटा चुनिए।')
+                    : __('पसंद भेजने के लिए पहले अपना बायोडाटा बनाइए और उसके मंज़ूर होने का इंतज़ार कीजिए।')
             );
         }
         $to = Biodata::approved()->find($toBiodataId);
         if (! $to) {
-            throw new DomainException('यह बायोडाटा अभी उपलब्ध नहीं है।');
+            throw new DomainException(__('यह बायोडाटा अभी उपलब्ध नहीं है।'));
         }
         if ($to->user_id === $user->id) {
-            throw new DomainException('आप अपने ही बायोडाटा को पसंद नहीं भेज सकते।');
+            throw new DomainException(__('आप अपने ही बायोडाटा को पसंद नहीं भेज सकते।'));
         }
         if ($to->gender === $from->gender) {
-            throw new DomainException('यह बायोडाटा आपके लिए उपलब्ध नहीं है।');
+            throw new DomainException(__('यह बायोडाटा आपके लिए उपलब्ध नहीं है।'));
         }
 
         $reverse = Interest::where('from_biodata_id', $to->id)->where('to_biodata_id', $from->id)
             ->whereIn('status', ['sent', 'accepted'])->exists();
         if ($reverse) {
-            throw new DomainException('इन्होंने पहले ही आपको पसंद भेजी है। "रिश्ते की पसंद" पेज देखिए।');
+            throw new DomainException(__('इन्होंने पहले ही आपको पसंद भेजी है। "रिश्ते की पसंद" पेज देखिए।'));
         }
 
         $existing = Interest::where('from_biodata_id', $from->id)->where('to_biodata_id', $to->id)->first();
         if ($existing && ! in_array($existing->status, ['expired', 'withdrawn'], true)) {
-            throw new DomainException('आप इन्हें पहले ही पसंद भेज चुके हैं।');
+            throw new DomainException(__('आप इन्हें पहले ही पसंद भेज चुके हैं।'));
         }
 
         if ($this->sentToday($user) >= self::dailyLimit()) {
@@ -114,7 +114,7 @@ class InterestService
     public static function senderLabel(Biodata $b): string
     {
         if ($b->added_by === 'self') {
-            return 'अपने लिए'.': '.$b->name;
+            return __('अपने लिए: :name', ['name' => $b->name]);
         }
 
         return $b->name.' ('.BiodataOptions::profileRelation($b->added_by, $b->gender).')';
@@ -123,13 +123,13 @@ class InterestService
     public function respond(User $user, Interest $interest, string $action): Interest
     {
         if ($interest->to_user_id !== $user->id) {
-            throw new DomainException('आप इस पर जवाब नहीं दे सकते।');
+            throw new DomainException(__('आप इस पर जवाब नहीं दे सकते।'));
         }
         if ($interest->status !== 'sent') {
-            throw new DomainException('इस पर पहले ही जवाब दिया जा चुका है।');
+            throw new DomainException(__('इस पर पहले ही जवाब दिया जा चुका है।'));
         }
         if ($interest->expires_at && $interest->expires_at->isPast()) {
-            throw new DomainException('यह पसंद का समय पूरा हो चुका है।');
+            throw new DomainException(__('यह पसंद का समय पूरा हो चुका है।'));
         }
 
         $accept = $action === 'accept';
@@ -143,10 +143,10 @@ class InterestService
             $accept ? 'interest_accepted' : 'interest_rejected',
             $accept
                 ? ($rel !== '' ? __(':name ने :rel की पसंद मंज़ूर की!', ['name' => $name, 'rel' => $relName]) : __(':name ने आपकी पसंद मंज़ूर की!', ['name' => $name]))
-                : ($rel !== '' ? __(':rel की पसंद पर जवाब आया', ['rel' => ucfirst($relName)]) : 'आपकी पसंद पर जवाब आया'),
+                : ($rel !== '' ? __(':rel की पसंद पर जवाब आया', ['rel' => ucfirst($relName)]) : __('आपकी पसंद पर जवाब आया')),
             $accept
-                ? 'अब आप दोनों एक-दूसरे का संपर्क नंबर देख सकते हैं।'
-                : 'धन्यवाद, इस बार संयोग नहीं बैठा। आपको जल्द ही सही रिश्ता मिले, शुभकामनाएँ।',
+                ? __('अब आप दोनों एक-दूसरे का संपर्क नंबर देख सकते हैं।')
+                : __('धन्यवाद, इस बार संयोग नहीं बैठा। आपको जल्द ही सही रिश्ता मिले, शुभकामनाएँ।'),
             route('interests.index', ['tab' => $accept ? 'accepted' : 'sent']),
         ));
 
@@ -156,7 +156,7 @@ class InterestService
     public function withdraw(User $user, Interest $interest): Interest
     {
         if ($interest->from_user_id !== $user->id || $interest->status !== 'sent') {
-            throw new DomainException('यह पसंद अब वापस नहीं ली जा सकती।');
+            throw new DomainException(__('यह पसंद अब वापस नहीं ली जा सकती।'));
         }
         $interest->update(['status' => 'withdrawn']);
 
@@ -166,7 +166,7 @@ class InterestService
     public function requestHelp(User $user, Interest $interest): Report
     {
         if ($interest->status !== 'accepted' || ! in_array($user->id, [$interest->from_user_id, $interest->to_user_id], true)) {
-            throw new DomainException('मदद सिर्फ़ मंज़ूर हुए रिश्ते पर मिल सकती है।');
+            throw new DomainException(__('मदद सिर्फ़ मंज़ूर हुए रिश्ते पर मिल सकती है।'));
         }
 
         return Report::firstOrCreate(

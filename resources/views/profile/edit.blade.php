@@ -34,13 +34,21 @@
                 @foreach([['name', 'पूरा नाम', true, 'sm:col-span-2', ''], ['email', 'ईमेल (ज़रूरी नहीं)', false, '', ''], ['gotra', 'गोत्र / उपजाति', false, '', 'अपनी जाति/उपजाति'], ['state', 'राज्य', true, '', ''], ['district', 'ज़िला', true, '', ''], ['city', 'शहर / गाँव', true, '', ''], ['area', 'क्षेत्र / मोहल्ला', false, '', '']] as [$f, $label, $req, $span, $help])
                     <div class="{{ $span }}">
                         <label for="{{ $f }}" class="field-label">{{ __($label) }}@if($req) <span class="text-rose-500">*</span>@endif</label>
+                        @if(in_array($f, ['state', 'district'], true))
+                            @php $opts = $f === 'state' ? \App\Support\BiodataOptions::states() : \App\Support\BiodataOptions::districtLabels(); @endphp
+                            <select id="{{ $f }}" name="{{ $f }}" required class="input">
+                                <option value="">{{ __('चुनें') }}</option>
+                                @foreach($opts as $k => $l)<option value="{{ $k }}" @selected(old($f, $user->$f) === $k)>{{ $l }}</option>@endforeach
+                            </select>
+                        @else
                         <input id="{{ $f }}" name="{{ $f }}" type="{{ $f === 'email' ? 'email' : 'text' }}" value="{{ old($f, $user->$f) }}" @required($req) class="input">
+                        @endif
                         @if($help)<p class="mt-1 text-sm text-ink-700">{{ __($help) }}</p>@endif
                         @error($f)<p class="field-error">{{ $message }}</p>@enderror
                     </div>
                 @endforeach
             </div>
-            <p class="mt-3 text-base text-ink-700">{{ __('फ़ोन नंबर') }} ({{ $user->phone }}) {{ __('आपकी लॉगिन पहचान है, इसलिए यहाँ से नहीं बदल सकते। बदलना हो तो एडमिन से बात करें।') }}</p>
+            <p class="mt-3 text-base text-ink-700">{{ __('फ़ोन नंबर (:phone) आपकी लॉगिन पहचान है, इसलिए यहाँ से नहीं बदल सकते। बदलना हो तो एडमिन से बात करें।', ['phone' => $user->phone]) }}</p>
         </section>
 
         {{-- password --}}

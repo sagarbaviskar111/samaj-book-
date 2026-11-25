@@ -33,7 +33,7 @@
             <a href="{{ route('home') }}" class="flex min-h-11 shrink-0 items-center" aria-label="SamajBook"><x-brand.logo class="mb-logo" size="h-9" :wordmark="true" /></a>
 
             {{-- desktop navigation --}}
-            <nav class="hidden flex-1 items-center justify-center gap-0.5 lg:flex" aria-label="Main">
+            <nav class="hidden flex-1 items-center justify-center gap-0.5 lg:flex" aria-label="{{ __('Main') }}">
                 @foreach($links as $l)
                     @if(Route::has($l['route']))
                         @php($on = request()->routeIs($l['match']))
@@ -48,7 +48,7 @@
                 @if(Route::has('posts.create') && ! $pending)
                     <a href="{{ route('posts.create') }}" class="btn-gold hidden whitespace-nowrap lg:inline-flex">+ {{ __('पोस्ट करें') }}</a>
                 @endif
-                <a href="{{ route('notifications.index') }}" class="relative flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-full px-1 transition hover:bg-sandal/60 active:scale-95 lg:px-3 {{ request()->routeIs('notifications.*') ? 'bg-kumkum-50 ring-1 ring-kumkum-200' : '' }}" aria-label="{{ __('सूचनाएँ') }}{{ $unread ? ' ('.$unread.' '.__('नई').')' : '' }}">
+                <a href="{{ route('notifications.index') }}" class="relative flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-full px-1 transition hover:bg-sandal/60 active:scale-95 lg:px-3 {{ request()->routeIs('notifications.*') ? 'bg-kumkum-50 ring-1 ring-kumkum-200' : '' }}" aria-label="{{ __('सूचनाएँ') }}{{ $unread ? ' ('.__(':n नई', ['n' => $unread]).')' : '' }}">
                     <svg class="h-6 w-6 text-ink-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"/></svg>
                     <span class="hidden text-[0.9375rem] font-bold text-ink-800 lg:inline">{{ __('सूचनाएँ') }}</span>
                     @if($unread)<span class="mb-badge absolute right-0 top-0 grid h-5 min-w-5 place-items-center rounded-full bg-rose-brand px-1 text-xs font-bold leading-none text-white ring-2 ring-cream">{{ $unread > 99 ? '99+' : $unread }}</span>@endif
@@ -77,6 +77,13 @@
                 @endif
             </div>
         </div>
+        @if(Route::has('locale.switch'))
+        <div class="mx-auto flex max-w-2xl items-center justify-end gap-1 px-4 pb-1.5 lg:max-w-6xl" role="group" aria-label="{{ __('भाषा') }}">
+            @foreach(['hi' => 'हिन्दी', 'mr' => 'मराठी', 'en' => 'English'] as $code => $lang)
+                <a href="{{ route('locale.switch', $code) }}" lang="{{ $code }}" @if(app()->getLocale() === $code) aria-current="true" @endif class="inline-flex min-h-8 items-center rounded-full px-3 text-xs font-bold transition {{ app()->getLocale() === $code ? 'bg-kumkum-700 text-white' : 'bg-sandal/70 text-ink-800 hover:bg-sandal' }}">{{ $lang }}</a>
+            @endforeach
+        </div>
+        @endif
     </header>
 
     @if($pending)

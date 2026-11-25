@@ -15,7 +15,7 @@ class PdfController extends Controller
     {
         $user = $request->user();
         abort_unless(BiodataAccess::canView($user, $biodata), 404);
-        abort_unless(BiodataAccess::canDownloadPdf($user, $biodata), 403, 'PDF is available after an interest is accepted.');
+        abort_unless(BiodataAccess::canDownloadPdf($user, $biodata), 403, __('PDF is available after an interest is accepted.'));
 
         // ?contact=0 hides the phone/WhatsApp lines (default: shown when access allows)
         $wantContact = $request->query('contact', '1') !== '0';

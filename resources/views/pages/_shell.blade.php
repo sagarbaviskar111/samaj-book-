@@ -15,17 +15,17 @@
 <div class="mx-auto -mt-10 grid max-w-5xl gap-6 px-4 pb-20 lg:grid-cols-[14rem_1fr] lg:gap-10">
     <aside class="hidden lg:block">
         <div class="sticky top-24 space-y-5">
-            <nav class="pub-toc" aria-label="विषय सूची">
-                <p class="mb-2 text-sm font-bold text-ink-800">इस पेज पर</p>
+            <nav class="pub-toc" aria-label="{{ __('विषय सूची') }}">
+                <p class="mb-2 text-sm font-bold text-ink-800">{{ __('इस पेज पर') }}</p>
                 <ul id="pubtoc" class="space-y-1 border-l border-ink-100 text-sm"></ul>
             </nav>
             <div class="rounded-2xl bg-white p-3 text-sm shadow-soft ring-1 ring-gold-200">
-                <p class="mb-1 text-sm font-bold text-ink-800">और पन्ने</p>
+                <p class="mb-1 text-sm font-bold text-ink-800">{{ __('और पन्ने') }}</p>
                 <ul class="space-y-1">
-                    <li><a class="block rounded-lg px-2 py-2.5 text-base hover:bg-ink-50" href="{{ route('page.about') }}">हमारे बारे में</a></li>
-                    <li><a class="block rounded-lg px-2 py-2.5 text-base hover:bg-ink-50" href="{{ route('page.faq') }}">मदद चाहिए?</a></li>
-                    <li><a class="block rounded-lg px-2 py-2.5 text-base hover:bg-ink-50" href="{{ route('page.terms') }}">नियम और शर्तें</a></li>
-                    <li><a class="block rounded-lg px-2 py-2.5 text-base hover:bg-ink-50" href="{{ route('page.privacy') }}">गोपनीयता नीति</a></li>
+                    <li><a class="block rounded-lg px-2 py-2.5 text-base hover:bg-ink-50" href="{{ route('page.about') }}">{{ __('हमारे बारे में') }}</a></li>
+                    <li><a class="block rounded-lg px-2 py-2.5 text-base hover:bg-ink-50" href="{{ route('page.faq') }}">{{ __('मदद चाहिए?') }}</a></li>
+                    <li><a class="block rounded-lg px-2 py-2.5 text-base hover:bg-ink-50" href="{{ route('page.terms') }}">{{ __('नियम और शर्तें') }}</a></li>
+                    <li><a class="block rounded-lg px-2 py-2.5 text-base hover:bg-ink-50" href="{{ route('page.privacy') }}">{{ __('गोपनीयता नीति') }}</a></li>
                 </ul>
             </div>
         </div>

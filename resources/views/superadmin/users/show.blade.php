@@ -33,10 +33,10 @@
             @endif
             <dl class="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm lg:grid-cols-4">
                 @foreach([
-                    ['Contact phone', $b->contact_phone], ['Photo privacy', $b->photo_privacy], ['Income', $b->income_range], ['Income private', $b->income_private ? 'Yes' : 'No'],
+                    ['Contact phone', $b->contact_phone], ['Photo privacy', $b->photo_privacy], ['Income', $b->income_range], ['Income private', $b->income_private ? __('Yes') : __('No')],
                     ['DOB', $b->dob?->format('d M Y')], ['Education', $b->education], ['Occupation', $b->occupation], ['Company', $b->company],
                     ['Father', $b->father_name], ['Mother', $b->mother_name], ['Gotra', $b->gotra], ['Village', $b->village],
-                    ['District', $b->district], ['State', $b->state], ['Verified', $b->verified ? 'Yes' : 'No'], ['Requests to parent', $b->requests_to_parent ? 'Yes' : 'No'],
+                    ['District', $b->district], ['State', $b->state], ['Verified', $b->verified ? __('Yes') : __('No')], ['Requests to parent', $b->requests_to_parent ? __('Yes') : __('No')],
                 ] as [$k, $v])
                     <div><dt class="text-[11px] uppercase text-ink-400">{{ __($k) }}</dt><dd class="break-words font-medium">{{ $v ?: '—' }}</dd></div>
                 @endforeach
@@ -59,7 +59,7 @@
     </section>
     <section class="card-pad">
         <h3 class="text-sm font-bold uppercase tracking-wide text-ink-500">{{ __('Posts') }} ({{ $posts->count() }})</h3>
-        <ul class="mt-2 space-y-2 text-sm">@forelse($posts as $p)<li><span class="text-ink-800">{{ \Illuminate\Support\Str::limit($p->body, 120) ?: '(image)' }}</span> <span class="text-xs text-ink-400">{{ $p->status }} · {{ $p->created_at?->format('d M Y') }}</span></li>@empty<li class="text-ink-400">—</li>@endforelse</ul>
+        <ul class="mt-2 space-y-2 text-sm">@forelse($posts as $p)<li><span class="text-ink-800">{{ \Illuminate\Support\Str::limit($p->body, 120) ?: __('(image)') }}</span> <span class="text-xs text-ink-400">{{ $p->status }} · {{ $p->created_at?->format('d M Y') }}</span></li>@empty<li class="text-ink-400">—</li>@endforelse</ul>
     </section>
     <section class="card-pad">
         <h3 class="text-sm font-bold uppercase tracking-wide text-ink-500">{{ __('Event registrations') }} ({{ $registrations->count() }})</h3>

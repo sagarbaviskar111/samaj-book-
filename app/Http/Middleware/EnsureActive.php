@@ -41,10 +41,10 @@ class EnsureActive
                 return $next($request);
             }
             if ($request->expectsJson() || $request->ajax()) {
-                return response()->json(['message' => 'एडमिन की मंज़ूरी बाकी है'], 403);
+                return response()->json(['message' => __('एडमिन की मंज़ूरी बाकी है')], 403);
             }
 
-            return redirect()->route('home')->with('pending_notice', 'एडमिन की मंज़ूरी बाकी है');
+            return redirect()->route('home')->with('pending_notice', __('एडमिन की मंज़ूरी बाकी है'));
         }
 
         return redirect()->route('account.status');

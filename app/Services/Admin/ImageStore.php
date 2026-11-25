@@ -13,7 +13,7 @@ class ImageStore
     {
         $src = @imagecreatefromstring((string) file_get_contents($file->getRealPath()));
         if (! $src) {
-            abort(422, 'Invalid image');
+            abort(422, __('Invalid image'));
         }
         $w = imagesx($src);
         $h = imagesy($src);

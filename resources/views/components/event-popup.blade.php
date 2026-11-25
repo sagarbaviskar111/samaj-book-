@@ -6,6 +6,7 @@
 @endphp
 @if($evUser && $evUser->role === 'user' && $evUser->isActive() && \Illuminate\Support\Facades\Route::has('events.popup') && ! request()->routeIs('events.join'))
 @php
+    $evT = ['आज - लाइव' => __('आज - लाइव'), 'निमंत्रण' => __('निमंत्रण'), 'बंद करें' => __('बंद करें'), 'कार्यक्रम शुरू होने वाला है!' => __('कार्यक्रम शुरू होने वाला है!'), 'आपको निमंत्रण है। नाम लिखवाएँ' => __('आपको निमंत्रण है। नाम लिखवाएँ'), 'बाद में' => __('बाद में'), 'नाम लिखवाएँ' => __('नाम लिखवाएँ'), 'फिर कोशिश करें' => __('फिर कोशिश करें'), 'आपका नाम लिख लिया गया! कार्यक्रम वाले दिन याद दिलाया जाएगा।' => __('आपका नाम लिख लिया गया! कार्यक्रम वाले दिन याद दिलाया जाएगा।'), 'कार्यक्रम देखें' => __('कार्यक्रम देखें'), 'पूरी जानकारी देखें' => __('पूरी जानकारी देखें'), 'अभी जुड़ें' => __('अभी जुड़ें'), ];
     $evCfg = ['url' => route('events.popup'), 'uid' => $evUser->id, 'csrf' => csrf_token(), 'current' => $evCurrent];
 @endphp
 <script type="application/json" id="ev-pop-cfg">{!! json_encode($evCfg, JSON_HEX_TAG | JSON_HEX_AMP) !!}</script>
@@ -14,6 +15,7 @@
     var cfgEl = document.getElementById('ev-pop-cfg');
     if (!cfgEl || !window.fetch) { return; }
     var cfg = JSON.parse(cfgEl.textContent);
+    var T = @json($evT);
     var LS = 'sbEvPop', SS = 'sbEvVisit', AWAY_MS = 5 * 60 * 1000, REFRESH_MS = 2 * 60 * 1000;
     var data = null, fetchedAt = 0, busy = false, modal = null, lastFocus = null;
     var memV = null;
@@ -81,16 +83,16 @@
             var img = el('img', 'h-full w-full object-cover'); img.src = ev.image_url; img.alt = ''; head.appendChild(img);
             head.appendChild(el('div', 'absolute inset-0 bg-gradient-to-t from-ink-950/60 to-transparent'));
         }
-        var chip = el('span', 'absolute left-4 top-4 rounded-full bg-gold-400 px-3 py-1 text-sm font-bold text-ink-950 shadow', kind === 'join' ? 'आज - लाइव' : 'निमंत्रण');
+        var chip = el('span', 'absolute left-4 top-4 rounded-full bg-gold-400 px-3 py-1 text-sm font-bold text-ink-950 shadow', kind === 'join' ? T['आज - लाइव'] : T['निमंत्रण']);
         head.appendChild(chip);
         var x = el('button', 'absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-white/20 text-xl text-white backdrop-blur transition hover:bg-white/30', '×');
-        x.type = 'button'; x.setAttribute('aria-label', 'बंद करें'); x.title = 'बंद करें'; x.addEventListener('click', dismiss);
+        x.type = 'button'; x.setAttribute('aria-label', T['बंद करें']); x.title = T['बंद करें']; x.addEventListener('click', dismiss);
         head.appendChild(x);
         panel.appendChild(head);
 
         var body = el('div', 'space-y-3 p-5'); body.id = 'ev-pop-body';
         var t = el('h2', 'font-display text-2xl font-bold leading-tight text-ink-900', ev.title); t.id = 'ev-pop-title';
-        body.appendChild(el('p', 'text-base font-bold text-gold-600', kind === 'join' ? 'कार्यक्रम शुरू होने वाला है!' : 'आपको निमंत्रण है। नाम लिखवाएँ'));
+        body.appendChild(el('p', 'text-base font-bold text-gold-600', kind === 'join' ? T['कार्यक्रम शुरू होने वाला है!'] : T['आपको निमंत्रण है। नाम लिखवाएँ']));
         body.appendChild(t);
         body.appendChild(el('p', 'text-base font-semibold text-ink-800', ev.starts_at_human));
         if (ev.place) { body.appendChild(el('p', 'text-base text-ink-700', ev.place)); }
@@ -107,30 +109,30 @@
     }
 
     function btnPrimary(label) { var b = el('button', 'btn-gold min-h-14 w-full text-lg', label); b.type = 'button'; return b; }
-    function later() { var b = el('button', 'btn-ghost min-h-11 w-full', 'बाद में'); b.type = 'button'; b.addEventListener('click', dismiss); return b; }
+    function later() { var b = el('button', 'btn-ghost min-h-11 w-full', T['बाद में']); b.type = 'button'; b.addEventListener('click', dismiss); return b; }
 
     function showRegister(ev) {
         var p = build('register', ev);
-        var reg = btnPrimary('नाम लिखवाएँ');
+        var reg = btnPrimary(T['नाम लिखवाएँ']);
         reg.addEventListener('click', function () {
             reg.disabled = true; reg.textContent = '...';
             fetch(ev.register_url, { method: 'POST', credentials: 'same-origin',
                 headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': cfg.csrf, 'X-Requested-With': 'XMLHttpRequest' } })
                 .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
                 .then(function (res) {
-                    if (!res.ok) { reg.disabled = false; reg.textContent = (res.j && res.j.message) || 'फिर कोशिश करें'; return; }
+                    if (!res.ok) { reg.disabled = false; reg.textContent = (res.j && res.j.message) || T['फिर कोशिश करें']; return; }
                     var s = L(); s.regd[ev.id] = true; wr(localStorage, LS, s);
                     data = null; onDismiss = null;
                     p.acts.textContent = '';
-                    p.body.appendChild(el('p', 'rounded-2xl bg-emerald-50 p-3 text-sm font-semibold text-emerald-800 ring-1 ring-emerald-200', 'आपका नाम लिख लिया गया! कार्यक्रम वाले दिन याद दिलाया जाएगा।'));
-                    var view = el('a', 'btn-primary min-h-12 w-full', 'कार्यक्रम देखें'); view.href = ev.event_url;
-                    var cl = el('button', 'btn-ghost min-h-11 w-full', 'बंद करें'); cl.type = 'button'; cl.addEventListener('click', dismiss);
+                    p.body.appendChild(el('p', 'rounded-2xl bg-emerald-50 p-3 text-sm font-semibold text-emerald-800 ring-1 ring-emerald-200', T['आपका नाम लिख लिया गया! कार्यक्रम वाले दिन याद दिलाया जाएगा।']));
+                    var view = el('a', 'btn-primary min-h-12 w-full', T['कार्यक्रम देखें']); view.href = ev.event_url;
+                    var cl = el('button', 'btn-ghost min-h-11 w-full', T['बंद करें']); cl.type = 'button'; cl.addEventListener('click', dismiss);
                     p.acts.appendChild(view); p.acts.appendChild(cl); view.focus();
                 })
-                .catch(function () { reg.disabled = false; reg.textContent = 'फिर कोशिश करें'; });
+                .catch(function () { reg.disabled = false; reg.textContent = T['फिर कोशिश करें']; });
         });
         p.acts.appendChild(reg);
-        var more = el('a', 'block py-2 text-center text-base font-bold text-ink-700 underline-offset-2 hover:underline', 'पूरी जानकारी देखें'); more.href = ev.event_url;
+        var more = el('a', 'block py-2 text-center text-base font-bold text-ink-700 underline-offset-2 hover:underline', T['पूरी जानकारी देखें']); more.href = ev.event_url;
         p.acts.appendChild(more);
         p.acts.appendChild(later());
         reg.focus();
@@ -138,7 +140,7 @@
 
     function showJoin(ev) {
         var p = build('join', ev);
-        var go = el('a', 'btn-gold min-h-14 w-full text-lg', 'अभी जुड़ें');
+        var go = el('a', 'btn-gold min-h-14 w-full text-lg', T['अभी जुड़ें']);
         go.href = ev.join_url; go.target = '_blank'; go.rel = 'noopener';
         go.addEventListener('click', function () {
             var s = L(); s.joined[ev.id] = true; wr(localStorage, LS, s);

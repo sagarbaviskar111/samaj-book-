@@ -14,9 +14,9 @@
     @forelse($items as $n)
         <div class="card flex gap-3 p-3">
             @if($n->image)<img src="{{ asset('storage/'.$n->image) }}" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover" loading="lazy">
-            @else<span class="grid h-24 w-24 shrink-0 place-items-center rounded-2xl bg-ink-50 text-xs font-semibold uppercase text-ink-300">{{ $n->type }}</span>@endif
+            @else<span class="grid h-24 w-24 shrink-0 place-items-center rounded-2xl bg-ink-50 text-xs font-semibold uppercase text-ink-300">{{ __(ucfirst($n->type)) }}</span>@endif
             <div class="flex min-w-0 flex-1 flex-col">
-                <div class="flex flex-wrap gap-1"><span class="badge-ink">{{ ucfirst($n->type) }}</span>
+                <div class="flex flex-wrap gap-1"><span class="badge-ink">{{ __(ucfirst($n->type)) }}</span>
                     <span class="{{ $n->is_published ? 'badge-ok' : 'badge-warn' }}">{{ $n->is_published ? __('Live') : __('Draft') }}</span></div>
                 <p class="mt-1 line-clamp-2 font-semibold text-ink-900">{{ $n->title }}</p>
                 @if($n->event_at)<p class="text-xs text-ink-500">{{ $n->event_at->format('d M Y, h:i A') }} {{ $n->event_place }}</p>@endif

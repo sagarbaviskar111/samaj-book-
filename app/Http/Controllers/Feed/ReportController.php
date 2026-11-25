@@ -24,8 +24,8 @@ class ReportController extends Controller
         );
 
         $msg = $report->wasRecentlyCreated
-            ? 'Thanks, we will review this report.'
-            : 'You have already reported this. Our team is reviewing it.';
+            ? __('Thanks, we will review this report.')
+            : __('You have already reported this. Our team is reviewing it.');
 
         return $request->expectsJson()
             ? response()->json(['ok' => true, 'duplicate' => ! $report->wasRecentlyCreated, 'message' => $msg])

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Support\BiodataOptions;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends FormRequest
@@ -29,8 +31,8 @@ class RegisterRequest extends FormRequest
             'email' => ['nullable', 'email', 'max:150', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::min(8)],
             'gotra' => ['nullable', 'string', 'max:100'],
-            'state' => ['required', 'string', 'max:100'],
-            'district' => ['required', 'string', 'max:100'],
+            'state' => ['required', Rule::in(array_keys(BiodataOptions::states()))],
+            'district' => ['required', Rule::in(array_keys(BiodataOptions::districts()))],
             'city' => ['required', 'string', 'max:100'],
             'area' => ['nullable', 'string', 'max:150'],
             'consent' => ['accepted'],

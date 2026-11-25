@@ -25,6 +25,22 @@ class User extends Authenticatable
         ];
     }
 
+    public function followers() { return $this->belongsToMany(self::class, 'follows', 'following_id', 'follower_id')->withTimestamps(); }
+    public function followings() { return $this->belongsToMany(self::class, 'follows', 'follower_id', 'following_id')->withTimestamps(); }
+    /** Ids of members this user follows (loaded once per request). */
+    public function followingIds(): array
+    {
+        return $this->followingIdsCache ??= \Illuminate\Support\Facades\DB::table('follows')
+            ->where('follower_id', $this->id)->pluck('following_id')->flip()->all();
+    }
+
+    public function isFollowing(int $userId): bool
+    {
+        return isset($this->followingIds()[$userId]);
+    }
+
+    private ?array $followingIdsCache = null;
+
     public function isAdmin(): bool { return in_array($this->role, ['superadmin', 'admin', 'subadmin'], true); }
     public function isSuperAdmin(): bool { return $this->role === 'superadmin'; }
     /** admin or superadmin: everything except being area-limited. */

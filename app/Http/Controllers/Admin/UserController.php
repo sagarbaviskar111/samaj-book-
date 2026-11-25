@@ -53,7 +53,7 @@ class UserController extends Controller
         $u->status = 'active';
         $u->reject_reason = null;
         $u->save();
-        AdminNotifier::to($u, 'account_approved', 'Your account is approved', 'Welcome to the samaj! You can now use the app.', AdminNotifier::routeOrNull('home'));
+        AdminNotifier::to($u, 'account_approved', __('Your account is approved'), __('Welcome to the samaj! You can now use the app.'), AdminNotifier::routeOrNull('home'));
         AuditLog::record('user.approve', 'user', $u->id, $u->name);
     }
 
@@ -82,7 +82,7 @@ class UserController extends Controller
         $u->status = 'rejected';
         $u->reject_reason = $request->validated('reason');
         $u->save();
-        AdminNotifier::to($u, 'account_rejected', 'Your account was not approved', $u->reject_reason, AdminNotifier::routeOrNull('account.status'));
+        AdminNotifier::to($u, 'account_rejected', __('Your account was not approved'), $u->reject_reason, AdminNotifier::routeOrNull('account.status'));
         AuditLog::record('user.reject', 'user', $u->id, $u->reject_reason);
 
         return back()->with('status', __('Member rejected.'));

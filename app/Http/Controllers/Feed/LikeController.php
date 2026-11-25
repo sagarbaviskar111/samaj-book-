@@ -45,7 +45,7 @@ class LikeController extends Controller
     private function notifyOnce(Post $post, $liker): void
     {
         $owner = $post->user;
-        $title = $liker->name.' liked your post';
+        $title = __(':name liked your post', ['name' => $liker->name]);
         $url = route('posts.show', $post);
 
         $dup = $owner->notifications()

@@ -90,7 +90,7 @@
                 <span class="badge-ink">{{ $series->sum('count') }} {{ __('total') }}</span>
             </div>
         </div>
-        <div class="mt-4" role="img" aria-label="Registrations per day">
+        <div class="mt-4" role="img" aria-label="{{ __('Registrations per day') }}">
             <svg viewBox="0 0 {{ $W }} {{ $H }}" class="h-44 w-full overflow-visible" preserveAspectRatio="none">
                 <defs><linearGradient id="admgrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f9b81c" stop-opacity=".55"/><stop offset="1" stop-color="#f9b81c" stop-opacity="0"/></linearGradient></defs>
                 @foreach([0.25, 0.5, 0.75] as $g)<line x1="0" x2="{{ $W }}" y1="{{ round($H * $g) }}" y2="{{ round($H * $g) }}" stroke="#e6d3c4" stroke-dasharray="4 5"/>@endforeach

@@ -100,6 +100,17 @@ class AdminScope
         });
     }
 
+    /** Interests where the sender or receiver belongs to the admin's area. */
+    public static function interests($query)
+    {
+        if ($area = static::area()) {
+            $ids = fn () => static::inArea(User::query()->where('role', 'user'), $area)->select('id');
+            $query->where(fn ($i) => $i->whereIn('from_user_id', $ids())->orWhereIn('to_user_id', $ids()));
+        }
+
+        return $query;
+    }
+
     /** Success stories are for the main admin only. */
     public static function stories($query)
     {

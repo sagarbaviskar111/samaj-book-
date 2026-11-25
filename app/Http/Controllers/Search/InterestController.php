@@ -59,7 +59,7 @@ class InterestController extends Controller
             return $this->reply($request, false, $e->getMessage());
         }
 
-        return $this->reply($request, true, 'पसंद भेज दी गई। 7 दिन में जवाब न आए तो यह अपने आप बंद हो जाएगी।');
+        return $this->reply($request, true, __('पसंद भेज दी गई। 7 दिन में जवाब न आए तो यह अपने आप बंद हो जाएगी।'));
     }
 
     public function respond(Request $request, Interest $interest)
@@ -74,7 +74,7 @@ class InterestController extends Controller
         }
 
         return redirect()->route('interests.index', ['tab' => $data['action'] === 'accept' ? 'accepted' : 'received'])
-            ->with('status', $data['action'] === 'accept' ? 'रिश्ता मंज़ूर किया। अब संपर्क नंबर दिख रहा है।' : 'आपने मना कर दिया। यह रिश्ता बंद हो गया।');
+            ->with('status', $data['action'] === 'accept' ? __('रिश्ता मंज़ूर किया। अब संपर्क नंबर दिख रहा है।') : __('आपने मना कर दिया। यह रिश्ता बंद हो गया।'));
     }
 
     public function withdraw(Request $request, Interest $interest)
@@ -86,7 +86,7 @@ class InterestController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('status', 'आपकी पसंद वापस ले ली गई।');
+        return back()->with('status', __('आपकी पसंद वापस ले ली गई।'));
     }
 
     public function help(Request $request, Interest $interest)
@@ -98,7 +98,7 @@ class InterestController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('status', 'एडमिन को आपका संदेश मिल गया। वे जल्द आपसे संपर्क करेंगे।');
+        return back()->with('status', __('एडमिन को आपका संदेश मिल गया। वे जल्द आपसे संपर्क करेंगे।'));
     }
 
     private function reply(Request $request, bool $ok, string $message)

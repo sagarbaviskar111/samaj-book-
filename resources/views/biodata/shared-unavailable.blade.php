@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="hi"><head><meta charset="utf-8">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>लिंक उपलब्ध नहीं · SamajBook</title>
+<title>{{ __('लिंक उपलब्ध नहीं') }} · SamajBook</title>
 <meta name="robots" content="noindex,nofollow">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SamajBook">
-<meta property="og:title" content="समाज बुक पर एक बायोडाटा">
-<meta property="og:description" content="SamajBook पर लॉगिन करके देखिए।">
+<meta property="og:title" content="{{ __('समाज बुक पर एक बायोडाटा') }}">
+<meta property="og:description" content="{{ __('SamajBook पर लॉगिन करके देखिए।') }}">
 <style>
     :root { --cream:#fff9ef; --ink:#3b2a20; --kumkum:#96202a; --gold:#ee9e0a; }
     * { box-sizing: border-box; }
@@ -19,9 +19,9 @@
 <body>
 <main class="card">
     <div aria-hidden="true" style="font-size:2.5rem">&#128279;</div>
-    <h1>यह लिंक अब उपलब्ध नहीं है</h1>
-    <p>लिंक ग़लत है, बंद कर दिया गया है, या बायोडाटा अभी मंज़ूर नहीं हुआ है।</p>
-    <p>नया लिंक भेजने के लिए बायोडाटा के मालिक से कहिए।</p>
-    <a class="btn" href="{{ url('/') }}">SamajBook पर जाइए</a>
+    <h1>{{ __('यह लिंक अब उपलब्ध नहीं है') }}</h1>
+    <p>{{ __('लिंक ग़लत है, बंद कर दिया गया है, या बायोडाटा अभी मंज़ूर नहीं हुआ है।') }}</p>
+    <p>{{ __('नया लिंक भेजने के लिए बायोडाटा के मालिक से कहिए।') }}</p>
+    <a class="btn" href="{{ url('/') }}">{{ __('SamajBook पर जाइए') }}</a>
 </main>
 </body></html>

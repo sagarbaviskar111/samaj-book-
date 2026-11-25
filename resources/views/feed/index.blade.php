@@ -116,6 +116,15 @@
         </div>
         @endunless
 
+        @unless($pending)
+        <div class="flex gap-2" role="tablist">
+            @foreach(['for-you' => __('सबके लिए'), 'following' => __('फ़ॉलो किए हुए')] as $k => $label)
+                <a href="{{ route('home', $k === 'following' ? ['tab' => 'following'] : []) }}" role="tab" aria-selected="{{ $tab === $k ? 'true' : 'false' }}"
+                   class="min-h-11 flex-1 rounded-full px-4 py-2.5 text-center text-base font-bold transition {{ $tab === $k ? 'bg-kumkum-700 text-white shadow-glow' : 'bg-white text-ink-700 ring-1 ring-ink-100 hover:bg-ink-50' }}">{{ $label }}</a>
+            @endforeach
+        </div>
+        @if($posts->currentPage() === 1)<div class="lg:hidden">@include('feed.partials.suggestions')</div>@endif
+        @endunless
         <div id="feed-list" class="space-y-4">
             @forelse($posts as $post)
                 @include('feed.partials.post', ['post' => $post])
@@ -131,7 +140,7 @@
                         <path d="M92 28c4 6 1 11-4 11s-6-6 4-11Z" fill="#e11d63"/>
                     </svg>
                     <p class="relative mt-3 font-display text-xl font-bold text-ink-800">{{ __('अभी कोई पोस्ट नहीं है') }}</p>
-                    <p class="relative mt-1 text-base text-ink-700">{{ $pending ? __('अभी कोई पोस्ट नहीं है।') : __('समाज के साथ अपना पहला पल साझा करें।') }}</p>
+                    <p class="relative mt-1 text-base text-ink-700">{{ $pending ? __('अभी कोई पोस्ट नहीं है।') : ($tab === 'following' ? __('फ़ॉलो किए हुए लोगों की कोई पोस्ट नहीं है। किसी सदस्य को फ़ॉलो करें!') : __('समाज के साथ अपना पहला पल साझा करें।')) }}</p>
                     @unless($pending)<a href="{{ route('posts.create') }}" class="btn-gold relative mt-5 inline-flex min-h-12 px-8 text-lg">{{ __('पोस्ट करें') }}</a>@endunless
                 </div>
             @endforelse
@@ -147,6 +156,7 @@
     {{-- ============ RIGHT (desktop): events + rishta teaser ============ --}}
     @unless($pending)
     <aside class="hidden space-y-4 lg:sticky lg:top-24 lg:block">
+        @include('feed.partials.suggestions')
         <section class="card card-pad">
             <h2 class="font-display text-lg font-bold text-ink-900">{{ __('आने वाले कार्यक्रम') }}</h2>
             @if(count($upcoming))

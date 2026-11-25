@@ -64,7 +64,7 @@ class BiodataController extends Controller
         $b->approved_by = auth()->id();
         $b->save();
 
-        AdminNotifier::to($b->user, 'biodata_approved', 'Your biodata is approved', 'It is now visible to members.', AdminNotifier::routeOrNull('biodata.index'));
+        AdminNotifier::to($b->user, 'biodata_approved', __('Your biodata is approved'), __('It is now visible to members.'), AdminNotifier::routeOrNull('biodata.index'));
         AuditLog::record('biodata.approve', 'biodata', $b->id, $b->name);
 
         if (class_exists(\App\Services\NewBiodataAlert::class)) {
@@ -85,7 +85,7 @@ class BiodataController extends Controller
         $b->reject_reason = $request->validated('reason');
         $b->save();
 
-        AdminNotifier::to($b->user, 'biodata_rejected', 'Your biodata needs changes', $b->reject_reason, AdminNotifier::routeOrNull('biodata.index'));
+        AdminNotifier::to($b->user, 'biodata_rejected', __('Your biodata needs changes'), $b->reject_reason, AdminNotifier::routeOrNull('biodata.index'));
         AuditLog::record('biodata.reject', 'biodata', $b->id, $b->reject_reason);
 
         return back()->with('status', __('Biodata rejected.'));

@@ -115,13 +115,13 @@ class GunMilan
     {
         if ($boy === null || $girl === null) {
             $status = 'unknown';
-            $note = 'Manglik ki jaankari dono taraf nahi hai. Pandit se poochhein.';
+            $note = __('Manglik ki jaankari dono taraf nahi hai. Pandit se poochhein.');
         } elseif ($boy === $girl) {
             $status = 'ok';
-            $note = $boy ? 'Dono manglik hain: aam taur par santulan maana jata hai.' : 'Dono non-manglik hain: koi manglik dosh nahi.';
+            $note = $boy ? __('Dono manglik hain: aam taur par santulan maana jata hai.') : __('Dono non-manglik hain: koi manglik dosh nahi.');
         } else {
             $status = 'check';
-            $note = 'Ek taraf manglik hai: pandit se zaroor jaanch karayein.';
+            $note = __('Ek taraf manglik hai: pandit se zaroor jaanch karayein.');
         }
 
         return ['status' => $status, 'boy' => $boy, 'girl' => $girl, 'note' => $note];
@@ -138,7 +138,7 @@ class GunMilan
         return [
             'obtained' => $ok ? 1 : 0,
             'boy_value' => Tables::VARNA_NAMES[$bv], 'girl_value' => Tables::VARNA_NAMES[$gv],
-            'note' => $ok ? 'Mansik star aur ahankar ka taalmel achha hai.' : 'Varna me antar hai: swabhav me thoda farq ho sakta hai.',
+            'note' => $ok ? __('Mansik star aur ahankar ka taalmel achha hai.') : __('Varna me antar hai: swabhav me thoda farq ho sakta hai.'),
         ];
     }
 
@@ -150,7 +150,7 @@ class GunMilan
 
         return [
             'obtained' => $p, 'boy_value' => ucfirst($bv), 'girl_value' => ucfirst($gv),
-            'note' => $p >= 2 ? 'Ek dusre par prabhav aur aapsi samajh bahut achhi.' : ($p > 0 ? 'Aapsi samajh aur prabhav madhyam.' : 'Ek dusre ko samajhne me mehnat lagegi.'),
+            'note' => $p >= 2 ? __('Ek dusre par prabhav aur aapsi samajh bahut achhi.') : ($p > 0 ? __('Aapsi samajh aur prabhav madhyam.') : __('Ek dusre ko samajhne me mehnat lagegi.')),
         ];
     }
 
@@ -165,7 +165,7 @@ class GunMilan
         return [
             'obtained' => $p,
             'boy_value' => $a ? 'Shubh' : 'Ashubh', 'girl_value' => $b ? 'Shubh' : 'Ashubh',
-            'note' => $p == 3 ? 'Dono taraf se tara shubh: sehat aur bhagya me sahayak.' : ($p > 0 ? 'Ek taraf se tara shubh hai.' : 'Dono taraf tara ashubh hai.'),
+            'note' => $p == 3 ? __('Dono taraf se tara shubh: sehat aur bhagya me sahayak.') : ($p > 0 ? __('Ek taraf se tara shubh hai.') : __('Dono taraf tara ashubh hai.')),
         ];
     }
 
@@ -177,7 +177,7 @@ class GunMilan
 
         return [
             'obtained' => $p, 'boy_value' => ucfirst($ba), 'girl_value' => ucfirst($ga),
-            'note' => $p >= 4 ? 'Ek hi yoni: shaaririk aur bhavnatmak taalmel bahut achha.' : ($p >= 3 ? 'Mitra yoni: achha taalmel.' : ($p >= 2 ? 'Samaanya taalmel.' : ($p >= 1 ? 'Taalmel kam hai.' : 'Shatru yoni: swabhav me takraav ki sambhavna.'))),
+            'note' => $p >= 4 ? __('Ek hi yoni: shaaririk aur bhavnatmak taalmel bahut achha.') : ($p >= 3 ? __('Mitra yoni: achha taalmel.') : ($p >= 2 ? __('Samaanya taalmel.') : ($p >= 1 ? __('Taalmel kam hai.') : __('Shatru yoni: swabhav me takraav ki sambhavna.')))),
         ];
     }
 
@@ -202,7 +202,7 @@ class GunMilan
 
         return [
             'obtained' => $p, 'boy_value' => ucfirst($bl), 'girl_value' => ucfirst($gl),
-            'note' => $p >= 4 ? 'Rashi swamiyon me mitrata: vichar aur sochne ka tareeka milta hai.' : ($p >= 3 ? 'Rashi swami sam: madhyam taalmel.' : 'Rashi swamiyon me matbhed ki sambhavna.'),
+            'note' => $p >= 4 ? __('Rashi swamiyon me mitrata: vichar aur sochne ka tareeka milta hai.') : ($p >= 3 ? __('Rashi swami sam: madhyam taalmel.') : __('Rashi swamiyon me matbhed ki sambhavna.')),
         ];
     }
 
@@ -214,7 +214,7 @@ class GunMilan
 
         return [
             'obtained' => $p, 'boy_value' => ucfirst($bv), 'girl_value' => ucfirst($gv),
-            'note' => $p >= 5 ? 'Swabhav (temperament) ka achha taalmel.' : ($p >= 1 ? 'Swabhav me thoda antar hai.' : 'Swabhav me bada antar: pandit se salah lein.'),
+            'note' => $p >= 5 ? __('Swabhav (temperament) ka achha taalmel.') : ($p >= 1 ? __('Swabhav me thoda antar hai.') : __('Swabhav me bada antar: pandit se salah lein.')),
         ];
     }
 
@@ -227,7 +227,7 @@ class GunMilan
 
         return [
             'obtained' => $bad ? 0 : 7, 'boy_value' => $d.'/'.$rev, 'girl_value' => $rev.'/'.$d,
-            'note' => $bad ? 'Bhakoot dosh: '.$d.'/'.$rev.' ka sambandh: arthik ya parivarik chunautiyan ho sakti hain.' : 'Bhakoot anukool: parivar aur samriddhi ke liye achha.',
+            'note' => $bad ? __('Bhakoot dosh: :d/:r ka sambandh: arthik ya parivarik chunautiyan ho sakti hain.', ['d' => $d, 'r' => $rev]) : __('Bhakoot anukool: parivar aur samriddhi ke liye achha.'),
         ];
     }
 
@@ -239,7 +239,7 @@ class GunMilan
 
         return [
             'obtained' => $same ? 0 : 8, 'boy_value' => ucfirst($bv), 'girl_value' => ucfirst($gv),
-            'note' => $same ? 'Nadi dosh: dono ki nadi ek hai: pandit se parihar poochhein.' : 'Nadi alag hai: swasthya aur santaan ke liye anukool.',
+            'note' => $same ? __('Nadi dosh: dono ki nadi ek hai: pandit se parihar poochhein.') : __('Nadi alag hai: swasthya aur santaan ke liye anukool.'),
         ];
     }
 }

@@ -1,5 +1,5 @@
 {{-- Kalash (auspicious pot) with mango leaves and coconut. --}}
-<svg viewBox="0 0 140 180" role="img" aria-label="कलश" {{ $attributes->class(['block']) }}>
+<svg viewBox="0 0 140 180" role="img" aria-label="{{ __('कलश') }}" {{ $attributes->class(['block']) }}>
     {{-- mango leaves --}}
     <g fill="#2f7d57">
         <path d="M70 62C52 44 36 36 18 40c6 20 24 32 52 22z"/>

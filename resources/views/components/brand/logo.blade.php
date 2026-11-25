@@ -33,7 +33,7 @@
     @if($wordmark)
         <span class="leading-none">
             <span class="block font-brand text-[1.35em] {{ $light ? 'text-cream' : 'text-kumkum-700' }}">समाज<span class="{{ $light ? 'text-gold-300' : 'text-gold-600' }}">Book</span></span>
-            @if($tagline)<span class="mt-1 block text-[.62em] font-semibold uppercase tracking-[.18em] {{ $light ? 'text-gold-200' : 'text-ink-500' }}">धोबी समाज · अपना परिवार</span>@endif
+            @if($tagline)<span class="mt-1 block text-[.62em] font-semibold uppercase tracking-[.18em] {{ $light ? 'text-gold-200' : 'text-ink-500' }}">{{ __('धोबी समाज · अपना परिवार') }}</span>@endif
         </span>
     @endif
 </span>

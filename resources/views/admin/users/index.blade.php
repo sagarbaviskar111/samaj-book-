@@ -41,7 +41,7 @@
                     <td class="text-ink-600">{{ $u->created_at->format('d M Y') }}</td>
                     <td>@include('admin.partials.status', ['s' => $u->status])</td>
                     <td><details class="adm-menu relative"><summary class="grid h-9 w-9 place-items-center rounded-full hover:bg-ink-50" aria-label="{{ __('Actions') }}">&#8942;</summary>
-                        <div class="absolute right-0 z-10 mt-1 w-40 rounded-xl bg-white p-1 text-sm shadow-soft ring-1 ring-ink-100"><a class="block rounded-lg px-3 py-2 hover:bg-ink-50" href="{{ route('admin.users.show', $u->id) }}">{{ __('Open') }}</a>@if(auth()->user()->isSuperAdmin())<a class="block rounded-lg px-3 py-2 text-gold-600 hover:bg-ink-50" href="{{ route('superadmin.users.show', $u->id) }}">{{ __('Full profile') }}</a>@endif</div></details></td>
+                        <div class="absolute right-0 z-10 mt-1 w-40 rounded-xl bg-white p-1 text-sm shadow-soft ring-1 ring-ink-100"><a class="block rounded-lg px-3 py-2 hover:bg-ink-50" href="{{ route('admin.users.show', $u->id) }}">{{ __('View') }}</a>@if(auth()->user()->isSuperAdmin())<a class="block rounded-lg px-3 py-2 text-gold-600 hover:bg-ink-50" href="{{ route('superadmin.users.show', $u->id) }}">{{ __('Full profile') }}</a>@endif</div></details></td>
                 </tr>
             @endforeach
             </tbody>

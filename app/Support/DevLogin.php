@@ -25,9 +25,9 @@ class DevLogin
 
         $groups = [
             'Admin' => [
-                // Superadmin creates Admins, Admin creates Sub-admins (later, from the panel).
-                ['9999999990', 'Superadmin', 'Sab kuch: logs, payments, keys'],
                 ['9999999999', 'Admin', 'Members, biodata, events, news'],
+                ['9888888801', 'Sub-admin Nashik', 'Sirf Nashik area'],
+                ['9888888802', 'Sub-admin Pune', 'Sirf Pune area'],
             ],
             'Ladka (biodata hai)' => $ladka,
             'Ladki (biodata hai)' => $ladki,

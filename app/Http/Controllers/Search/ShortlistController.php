@@ -48,6 +48,6 @@ class ShortlistController extends Controller
             return response()->json(['shortlisted' => $on]);
         }
 
-        return back()->with('status', $on ? 'सहेजे हुए रिश्तों में जोड़ दिया गया।' : 'सहेजे हुए रिश्तों से हटा दिया गया।');
+        return back()->with('status', $on ? __('सहेजे हुए रिश्तों में जोड़ दिया गया।') : __('सहेजे हुए रिश्तों से हटा दिया गया।'));
     }
 }

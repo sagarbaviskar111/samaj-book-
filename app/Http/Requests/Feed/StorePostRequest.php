@@ -22,6 +22,6 @@ class StorePostRequest extends FormRequest
 
     public function messages(): array
     {
-        return ['body.required_without' => 'Write something or add a photo.'];
+        return ['body.required_without' => __('Write something or add a photo.')];
     }
 }

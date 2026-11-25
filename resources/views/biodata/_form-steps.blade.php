@@ -1,6 +1,6 @@
 @use('App\Support\BiodataOptions', 'O')
 @php
-    $steps = ['व्यक्तिगत जानकारी', 'पढ़ाई और काम', 'परिवार', 'समाज और पता', 'अपने बारे में और संपर्क'];
+    $steps = array_map('__', ['व्यक्तिगत जानकारी', 'पढ़ाई और काम', 'परिवार', 'समाज और पता', 'अपने बारे में और संपर्क']);
     $stepIcons = [
         'M15.5 7.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 20a7 7 0 0 1 14 0',
         'M4 8h16v11H4V8Zm5 0V5h6v3M4 13h16',
@@ -18,13 +18,13 @@
     {{-- progress: sticky stepper --}}
     <div class="card-pad sticky top-[57px] z-20 !py-3 lg:top-[72px]" id="bio-progress">
         <div class="flex items-center justify-between gap-2 font-semibold text-ink-800">
-            <span id="bio-step-label" class="font-display text-base font-bold text-ink-900">हर चरण भरिए</span>
+            <span id="bio-step-label" class="font-display text-base font-bold text-ink-900">{{ __('हर चरण भरिए') }}</span>
             <span id="bio-step-count" class="hidden rounded-full bg-gold-100 px-3 py-1 text-base font-bold text-ink-900"></span>
         </div>
         <div class="mt-2 h-2.5 overflow-hidden rounded-full bg-ink-100"><div id="bio-bar" class="h-full w-full rounded-full bg-gradient-to-r from-kumkum-500 to-gold-400 transition-all duration-500"></div></div>
         <div class="mt-3 hidden items-start justify-between gap-1" id="bio-tabs">
             @foreach($steps as $i => $s)
-                <button type="button" data-goto="{{ $i }}" aria-label="चरण {{ $i + 1 }}: {{ $s }}" class="group flex min-h-12 flex-1 flex-col items-center gap-1 rounded-xl px-1 py-1 text-ink-700 transition hover:bg-ink-50">
+                <button type="button" data-goto="{{ $i }}" aria-label="{{ __('चरण :n', ['n' => $i + 1]) }}: {{ $s }}" class="group flex min-h-12 flex-1 flex-col items-center gap-1 rounded-xl px-1 py-1 text-ink-700 transition hover:bg-ink-50">
                     <span data-dot class="grid h-10 w-10 place-items-center rounded-full bg-ink-50 text-ink-700 ring-1 ring-ink-100 transition">
                         <svg class="pointer-events-none h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $stepIcons[$i] }}"/></svg>
                     </span>
@@ -35,7 +35,7 @@
     </div>
 
     @if($errors->any())
-        <div class="rounded-xl bg-rose-50 px-4 py-3 text-base font-semibold text-rose-800 ring-1 ring-rose-200" role="alert">कुछ जानकारी सही नहीं है। लाल निशान वाली जगह देखिए और ठीक कीजिए।</div>
+        <div class="rounded-xl bg-rose-50 px-4 py-3 text-base font-semibold text-rose-800 ring-1 ring-rose-200" role="alert">{{ __('कुछ जानकारी सही नहीं है। लाल निशान वाली जगह देखिए और ठीक कीजिए।') }}</div>
     @endif
 
     {{-- 1 Personal --}}
@@ -56,8 +56,8 @@
             @include('biodata.partials.field', ['name' => 'birth_time', 'label' => 'जन्म का समय (कुंडली के लिए)', 'type' => 'time'])
             @include('biodata.partials.field', ['name' => 'birth_place', 'label' => 'जन्म स्थान'])
             <div class="sm:col-span-2 rounded-2xl bg-gold-50 p-4 ring-1 ring-gold-200" id="kundli-block">
-                <p class="text-base font-bold text-ink-900">&#128302; कुंडली की जानकारी (ज़रूरी नहीं)</p>
-                <p class="mb-3 text-sm text-ink-700">कुंडली में लिखा होता है। पता न हो तो खाली छोड़िए। यह सिर्फ़ रिश्ता मंज़ूर होने के बाद सामने वाले को दिखती है।</p>
+                <p class="text-base font-bold text-ink-900">&#128302; {{ __('कुंडली की जानकारी (ज़रूरी नहीं)') }}</p>
+                <p class="mb-3 text-sm text-ink-700">{{ __('कुंडली में लिखा होता है। पता न हो तो खाली छोड़िए। यह सिर्फ़ रिश्ता मंज़ूर होने के बाद सामने वाले को दिखती है।') }}</p>
                 <div class="grid gap-4 sm:grid-cols-3">
                     @include('biodata.partials.field', ['name' => 'nakshatra', 'label' => 'नक्षत्र', 'type' => 'select', 'options' => O::nakshatras()])
                     @include('biodata.partials.field', ['name' => 'nakshatra_pada', 'label' => 'चरण (पद)', 'type' => 'select', 'options' => [1 => '1', 2 => '2', 3 => '3', 4 => '4']])
@@ -95,7 +95,7 @@
             <label class="flex min-h-12 items-center gap-3 text-base text-ink-900 sm:col-span-2">
                 <input type="hidden" name="income_private" value="0">
                 <input type="checkbox" name="income_private" value="1" class="h-6 w-6 shrink-0 rounded border-ink-300 text-ink-600" @checked(old('income_private', $biodata->income_private ?? true))>
-                रिश्ता मंज़ूर होने तक मेरी आमदनी छिपाकर रखिए
+                {{ __('रिश्ता मंज़ूर होने तक मेरी आमदनी छिपाकर रखिए') }}
             </label>
         </div>
     </section>
@@ -146,14 +146,14 @@
         </div>
 
         <div class="mt-5 rounded-2xl bg-ink-50 p-4 ring-1 ring-ink-100">
-            <h3 class="mb-3 text-base font-bold text-ink-900">संपर्क और गोपनीयता</h3>
+            <h3 class="mb-3 text-base font-bold text-ink-900">{{ __('संपर्क और गोपनीयता') }}</h3>
             <div class="grid gap-4 sm:grid-cols-2">
                 @include('biodata.partials.field', ['name' => 'contact_phone', 'label' => 'मोबाइल / WhatsApp नंबर', 'type' => 'tel', 'required' => true, 'hint' => 'यह नंबर सिर्फ़ रिश्ता मंज़ूर होने के बाद सामने वाले को दिखेगा।'])
                 @include('biodata.partials.field', ['name' => 'photo_privacy', 'label' => 'आपकी फ़ोटो कौन देख सके?', 'type' => 'select', 'options' => O::photoPrivacies(), 'required' => true, 'seg' => true])
                 <label class="flex items-start gap-3 text-base text-ink-900 sm:col-span-2">
                     <input type="hidden" name="requests_to_parent" value="0">
                     <input type="checkbox" name="requests_to_parent" value="1" class="mt-0.5 h-6 w-6 shrink-0 rounded border-ink-300 text-ink-600" @checked(old('requests_to_parent', $biodata->requests_to_parent))>
-                    <span>सारी पसंद (रिश्ते के अनुरोध) माता-पिता / परिवार के खाते में भेजिए, मेरे खाते में नहीं</span>
+                    <span>{{ __('सारी पसंद (रिश्ते के अनुरोध) माता-पिता / परिवार के खाते में भेजिए, मेरे खाते में नहीं') }}</span>
                 </label>
             </div>
         </div>
@@ -161,13 +161,13 @@
 
 
     <div class="sticky bottom-20 z-20 flex flex-wrap items-center justify-between gap-2 rounded-2xl glass p-3 shadow-glow lg:bottom-4">
-        <button type="button" id="bio-prev" class="btn-ghost hidden !min-h-12">&larr; पीछे</button>
+        <button type="button" id="bio-prev" class="btn-ghost hidden !min-h-12">&larr; {{ __('पीछे') }}</button>
         <div class="ml-auto flex flex-wrap gap-2">
             @if(! $biodata->exists || $biodata->status === 'draft')
-                <button type="submit" name="save_draft" value="1" class="btn-ghost !min-h-12" formnovalidate>ड्राफ़्ट सेव करें</button>
+                <button type="submit" name="save_draft" value="1" class="btn-ghost !min-h-12" formnovalidate>{{ __('ड्राफ़्ट सेव करें') }}</button>
             @endif
-            <button type="button" id="bio-next" class="btn-primary hidden !min-h-12 !px-6 !text-lg">आगे बढ़ें &rarr;</button>
-            <button type="submit" id="bio-submit" class="btn-gold !min-h-12 !px-6 !text-lg">{{ $biodata->exists ? 'सेव करें' : 'मंज़ूरी के लिए भेजें' }}</button>
+            <button type="button" id="bio-next" class="btn-primary hidden !min-h-12 !px-6 !text-lg">{{ __('आगे बढ़ें') }} &rarr;</button>
+            <button type="submit" id="bio-submit" class="btn-gold !min-h-12 !px-6 !text-lg">{{ $biodata->exists ? __('सेव करें') : __('मंज़ूरी के लिए भेजें') }}</button>
         </div>
     </div>
 </form>
@@ -181,6 +181,7 @@
     var prev = document.getElementById('bio-prev'), next = document.getElementById('bio-next'), submit = document.getElementById('bio-submit');
     var bar = document.getElementById('bio-bar'), lbl = document.getElementById('bio-step-label'), cnt = document.getElementById('bio-step-count');
     var names = {!! json_encode($steps) !!};
+    var stepWord = {!! json_encode(__('चरण :n', ['n' => ':n'])) !!};
     var tabs = document.getElementById('bio-tabs');
     var exists = {{ $biodata->exists ? 'true' : 'false' }};
     var maxSeen = 0;
@@ -216,7 +217,7 @@
         submit.classList.toggle('hidden', cur !== total - 1 && !exists);
         bar.style.width = ((cur + 1) / total * 100) + '%';
         lbl.textContent = names[cur];
-        cnt.textContent = 'चरण ' + (cur + 1) + ' / ' + total; cnt.classList.remove('hidden');
+        cnt.textContent = stepWord.replace(':n', (cur + 1) + ' / ' + total); cnt.classList.remove('hidden');
         tabs.classList.remove('hidden'); tabs.classList.add('flex');
         [].forEach.call(tabs.children, function (b, k) {
             var d = b.querySelector('[data-dot]');
@@ -244,13 +245,13 @@
             var bad = [].some.call(secs[k].querySelectorAll('input,select,textarea'), function (el) { return !el.checkValidity(); });
             if (bad) { e.preventDefault(); show(k); valid(); return; }
         }
-        submit.disabled = true; submit.textContent = 'सेव हो रहा है...';
+        submit.disabled = true; submit.textContent = @json(__('सेव हो रहा है...'));
     });
-    // Browser pop-up messages in Hindi.
+    // Browser pop-up messages (localized).
     form.addEventListener('invalid', function (e) {
         var el = e.target; el.setCustomValidity('');
-        if (el.validity.valueMissing) el.setCustomValidity(el.tagName === 'SELECT' ? 'कृपया एक विकल्प चुनिए।' : 'यह जानकारी भरना ज़रूरी है।');
-        else if (el.validity.rangeUnderflow || el.validity.rangeOverflow) el.setCustomValidity('कृपया सही संख्या डालिए।');
+        if (el.validity.valueMissing) el.setCustomValidity(el.tagName === 'SELECT' ? @json(__('कृपया एक विकल्प चुनिए।')) : @json(__('यह जानकारी भरना ज़रूरी है।')));
+        else if (el.validity.rangeUnderflow || el.validity.rangeOverflow) el.setCustomValidity(@json(__('कृपया सही संख्या डालिए।')));
     }, true);
     ['input', 'change'].forEach(function (ev) { form.addEventListener(ev, function (e) { if (e.target.setCustomValidity) e.target.setCustomValidity(''); }, true); });
     // jump to the first step that has a server-side error

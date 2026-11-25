@@ -16,6 +16,7 @@ class SetLocale
             $locale = 'hi';
         }
         app()->setLocale($locale);
+        \Illuminate\Support\Carbon::setLocale($locale); // month/day names in the chosen language
 
         return $next($request);
     }

@@ -21,6 +21,6 @@ class PhotoRequest extends FormRequest
 
     public function messages(): array
     {
-        return ['photos.*.max' => 'हर फ़ोटो 4 MB से छोटी होनी चाहिए।', 'photos.*.image' => 'सिर्फ़ फ़ोटो (JPG, PNG, WebP) चुनिए।'];
+        return ['photos.*.max' => __('हर फ़ोटो 4 MB से छोटी होनी चाहिए।'), 'photos.*.image' => __('सिर्फ़ फ़ोटो (JPG, PNG, WebP) चुनिए।')];
     }
 }

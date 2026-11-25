@@ -34,14 +34,14 @@ class ShareController extends Controller
         if (! $user) {
             $request->session()->put('url.intended', $target);
 
-            return $this->redirectWithPreview(route('login'), ['status' => self::LOGIN_HINT, 'share_hint' => self::LOGIN_HINT]);
+            return $this->redirectWithPreview(route('login'), ['status' => __(self::LOGIN_HINT), 'share_hint' => __(self::LOGIN_HINT)]);
         }
 
         if ($user->isAdmin() || $user->isActive()) {
             return $this->redirectWithPreview($target);
         }
         if ($user->isPending()) {
-            return $this->redirectWithPreview(route('home'), ['pending_notice' => 'एडमिन की मंज़ूरी बाकी है']);
+            return $this->redirectWithPreview(route('home'), ['pending_notice' => __('एडमिन की मंज़ूरी बाकी है')]);
         }
 
         return $this->redirectWithPreview(route('account.status'));
@@ -51,7 +51,7 @@ class ShareController extends Controller
     public function show(Request $request, Biodata $biodata): JsonResponse
     {
         $this->authorizeOwner($request, $biodata);
-        abort_unless($biodata->status === 'approved', 422, 'Share is available once the biodata is approved.');
+        abort_unless($biodata->status === 'approved', 422, __('Share is available once the biodata is approved.'));
 
         $biodata->ensureShareToken();
 
@@ -92,7 +92,7 @@ class ShareController extends Controller
         return response()->json([
             'url' => $url,
             'enabled' => (bool) $b->share_enabled,
-            'message' => "नमस्ते, ये मेरा/हमारा बायोडाटा है. देखने के लिए SamajBook पर login करें: {$url}",
+            'message' => __('नमस्ते, ये मेरा/हमारा बायोडाटा है. देखने के लिए SamajBook पर login करें: :url', ['url' => $url]),
             'pdf' => route('biodata.pdf', $b),
         ]);
     }

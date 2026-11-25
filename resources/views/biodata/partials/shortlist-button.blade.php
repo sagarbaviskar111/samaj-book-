@@ -11,7 +11,7 @@
             <svg class="h-6 w-6 {{ $isShortlisted ? 'fill-rose-brand text-rose-brand' : 'fill-transparent text-ink-600' }}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.49-2.01-4.5-4.5-4.5-1.74 0-3.41.99-4.5 2.57-1.09-1.58-2.76-2.57-4.5-2.57C5.01 3.75 3 5.76 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
             </svg>
-            <span data-sl-label>{{ $isShortlisted ? 'सहेजा गया' : 'सहेजें' }}</span>
+            <span data-sl-label>{{ $isShortlisted ? __('सहेजा गया') : __('सहेजें') }}</span>
         </button>
     @else
         <button type="submit" aria-pressed="{{ $isShortlisted ? 'true' : 'false' }}"
@@ -19,7 +19,7 @@
             <svg class="h-5 w-5 {{ $isShortlisted ? 'fill-rose-brand text-rose-brand' : 'fill-transparent text-ink-700' }}" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.49-2.01-4.5-4.5-4.5-1.74 0-3.41.99-4.5 2.57-1.09-1.58-2.76-2.57-4.5-2.57C5.01 3.75 3 5.76 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/>
             </svg>
-            <span data-sl-label>{{ $isShortlisted ? 'सहेजा गया' : 'सहेजें' }}</span>
+            <span data-sl-label>{{ $isShortlisted ? __('सहेजा गया') : __('सहेजें') }}</span>
         </button>
     @endif
 </form>
@@ -37,7 +37,7 @@ document.addEventListener('submit', function (e) {
             svg.classList.toggle('fill-rose-brand', d.shortlisted); svg.classList.toggle('text-rose-brand', d.shortlisted);
             svg.classList.toggle('fill-transparent', !d.shortlisted); svg.classList.toggle('text-ink-700', !d.shortlisted);
             btn.setAttribute('aria-pressed', d.shortlisted);
-            if (lbl) lbl.textContent = d.shortlisted ? 'सहेजा गया' : 'सहेजें';
+            if (lbl) lbl.textContent = d.shortlisted ? @json(__('सहेजा गया')) : @json(__('सहेजें'));
             svg.classList.remove('bd-pop'); void svg.getBoundingClientRect(); if (d.shortlisted) svg.classList.add('bd-pop');
         })
         .catch(function () { f.submit(); });

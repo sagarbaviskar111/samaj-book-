@@ -3,11 +3,11 @@
 @section('content')
 @php
     $rows = [
-        'Personal' => [['Gender', ucfirst($b->gender)], ['Date of birth', $b->dob?->format('d M Y').' ('.$b->dob?->age.' yrs)'], ['Height', $b->height_cm ? $b->height_cm.' cm' : null], ['Weight', $b->weight_kg ? $b->weight_kg.' kg' : null], ['Complexion', $b->complexion], ['Blood group', $b->blood_group], ['Marital status', str_replace('_', ' ', $b->marital_status)], ['Manglik', is_null($b->manglik) ? null : ($b->manglik ? 'Yes' : 'No')], ['Disability', $b->disability], ['Birth', trim(($b->birth_time ?? '').' '.($b->birth_place ?? ''))]],
-        'Education and work' => [['Education', $b->education], ['Level', $b->education_level], ['Occupation', trim($b->occupation_type.' '.$b->occupation)], ['Company', $b->company], ['Income', $b->income_range.($b->income_private ? ' (private)' : '')]],
-        'Family' => [['Father', trim($b->father_name.' '.($b->father_occupation ? '('.$b->father_occupation.')' : ''))], ['Mother', trim($b->mother_name.' '.($b->mother_occupation ? '('.$b->mother_occupation.')' : ''))], ['Brothers', $b->brothers.' ('.$b->brothers_married.' married)'], ['Sisters', $b->sisters.' ('.$b->sisters_married.' married)'], ['Family type', $b->family_type], ['Mama gotra / village', trim($b->mama_gotra.' '.$b->mama_village)]],
+        'Personal' => [['Gender', __(ucfirst($b->gender))], ['Date of birth', $b->dob?->format('d M Y').' ('.$b->dob?->age.' '.__('yrs').')'], ['Height', $b->height_cm ? $b->height_cm.' '.__('cm') : null], ['Weight', $b->weight_kg ? $b->weight_kg.' '.__('kg') : null], ['Complexion', $b->complexion], ['Blood group', $b->blood_group], ['Marital status', $b->marital_status ? __(ucfirst(str_replace('_', ' ', $b->marital_status))) : null], ['Manglik', is_null($b->manglik) ? null : ($b->manglik ? __('Yes') : __('No'))], ['Disability', $b->disability], ['Birth', trim(($b->birth_time ?? '').' '.($b->birth_place ?? ''))]],
+        'Education and work' => [['Education', $b->education], ['Level', $b->education_level], ['Occupation', trim($b->occupation_type.' '.$b->occupation)], ['Company', $b->company], ['Income', $b->income_range.($b->income_private ? ' ('.__('private').')' : '')]],
+        'Family' => [['Father', trim($b->father_name.' '.($b->father_occupation ? '('.$b->father_occupation.')' : ''))], ['Mother', trim($b->mother_name.' '.($b->mother_occupation ? '('.$b->mother_occupation.')' : ''))], ['Brothers', $b->brothers.' ('.$b->brothers_married.' '.__('married').')'], ['Sisters', $b->sisters.' ('.$b->sisters_married.' '.__('married').')'], ['Family type', $b->family_type], ['Mama gotra / village', trim($b->mama_gotra.' '.$b->mama_village)]],
         'Samaj and location' => [['Gotra', $b->gotra], ['Upjati', $b->upjati], ['Village', $b->village], ['Tehsil', $b->tehsil], ['District', $b->district], ['State', $b->state], ['Current city', $b->current_city], ['Area', $b->area]],
-        'Contact (admin only)' => [['Contact phone', $b->contact_phone], ['Account phone', $b->user?->phone], ['Photo privacy', $b->photo_privacy], ['Requests go to parent', $b->requests_to_parent ? 'Yes' : 'No']],
+        'Contact (admin only)' => [['Contact phone', $b->contact_phone], ['Account phone', $b->user?->phone], ['Photo privacy', $b->photo_privacy], ['Requests go to parent', $b->requests_to_parent ? __('Yes') : __('No')]],
         'Preferences' => [['Age range', $b->pref_age_min ? $b->pref_age_min.' - '.$b->pref_age_max : null], ['Education', $b->pref_education_level], ['District', $b->pref_district]],
     ];
 @endphp
@@ -82,7 +82,7 @@
 
             <form method="POST" action="{{ route('admin.biodata.status', $b->id) }}" class="flex gap-2">@csrf
                 <select name="status" class="input">
-                    @foreach(['approved', 'paused', 'married'] as $s)<option value="{{ $s }}" @selected($b->status === $s)>{{ ucfirst($s) }}</option>@endforeach
+                    @foreach(['approved', 'paused', 'married'] as $s)<option value="{{ $s }}" @selected($b->status === $s)>{{ __(ucfirst($s)) }}</option>@endforeach
                 </select>
                 <button class="btn-ghost">{{ __('Set') }}</button>
             </form>

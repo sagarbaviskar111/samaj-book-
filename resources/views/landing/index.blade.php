@@ -4,15 +4,15 @@
 @php
     // ---- Editable heritage copy -------------------------------------------------------------
     // OWNER: please verify the exact wording of this line with the samaj elders before launch.
-    $gadgeQuote = 'भूखे को अन्न, प्यासे को पानी, वस्त्रहीन को वस्त्र, बेघर को आश्रय।';
+    $gadgeQuote = __('भूखे को अन्न, प्यासे को पानी, वस्त्रहीन को वस्त्र, बेघर को आश्रय।');
     // -------------------------------------------------------------------------------------------
     $reg = Route::has('register') ? route('register') : '#';
     $log = Route::has('login') ? route('login') : '#';
     $grads = ['from-kumkum-800 to-kumkum-500', 'from-gold-500 to-kumkum-500', 'from-neel-700 to-neel-500', 'from-tulsi-600 to-gold-500'];
     $samples = [
-        ['t' => 'परिचय सम्मेलन', 'b' => 'समाज के युवाओं के लिए वार्षिक परिचय सम्मेलन की तैयारी शुरू।', 'g' => 0],
-        ['t' => 'सामूहिक विवाह', 'b' => 'सामूहिक विवाह समारोह के लिए पंजीकरण जल्द खुलेंगे।', 'g' => 1],
-        ['t' => 'समाज बैठक', 'b' => 'सभी सदस्यों से निवेदन है कि आगामी बैठक में अवश्य पधारें।', 'g' => 2],
+        ['t' => __('परिचय सम्मेलन'), 'b' => __('समाज के युवाओं के लिए वार्षिक परिचय सम्मेलन की तैयारी शुरू।'), 'g' => 0],
+        ['t' => __('सामूहिक विवाह'), 'b' => __('सामूहिक विवाह समारोह के लिए पंजीकरण जल्द खुलेंगे।'), 'g' => 1],
+        ['t' => __('समाज बैठक'), 'b' => __('सभी सदस्यों से निवेदन है कि आगामी बैठक में अवश्य पधारें।'), 'g' => 2],
     ];
     $heart = 'M12 21s-7.5-4.6-9.3-9.2C1.4 8.3 3.4 5 6.8 5c2 0 3.5 1.1 5.2 3 1.7-1.9 3.2-3 5.2-3 3.4 0 5.4 3.3 4.1 6.8C19.5 16.4 12 21 12 21z';
     $bubbles = [[8, 16, 14, 0], [22, 10, 17, 3], [38, 22, 12, 6], [55, 12, 15, 1.5], [70, 18, 13, 8], [84, 11, 16, 4.5], [93, 20, 12, 10]];
@@ -62,22 +62,22 @@
     <div class="relative z-[2] mx-auto mt-4 grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-[1.15fr_.85fr] lg:gap-8">
         <div class="hr-reveal">
             <span class="inline-flex items-center gap-2 rounded-full bg-black/20 px-3.5 py-1.5 text-sm font-semibold text-gold-200 ring-1 ring-gold-300/35">
-                <svg class="h-4 w-4 text-gold-300" aria-hidden="true"><use href="#pub-marigold"/></svg> धोबी (रजक) समाज का अपना, सुरक्षित मंच
+                <svg class="h-4 w-4 text-gold-300" aria-hidden="true"><use href="#pub-marigold"/></svg> {{ __('धोबी (रजक) समाज का अपना, सुरक्षित मंच') }}
             </span>
             <h1 class="hr-brand mt-5 text-[2.3rem] font-normal sm:text-5xl lg:text-[3.45rem]">
-                अपने समाज में, <span class="hr-shine">अपनों के बीच</span> जीवनसाथी की तलाश
+                {{ __('अपने समाज में,') }} <span class="hr-shine">{{ __('अपनों के बीच') }}</span> {{ __('जीवनसाथी की तलाश') }}
             </h1>
-            <p class="mt-5 max-w-xl text-lg leading-relaxed text-kumkum-100/95">जाँचे-परखे बायोडाटा, आपके नियंत्रण में प्राइवेसी, और परिवार जैसा अपना समाज।<br><span class="text-base text-kumkum-100/75">Find your life partner within your own samaj, with verified biodata and privacy you control.</span></p>
+            <p class="mt-5 max-w-xl text-lg leading-relaxed text-kumkum-100/95">{{ __('जाँचे-परखे बायोडाटा, आपके नियंत्रण में प्राइवेसी, और परिवार जैसा अपना समाज।') }}</p>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a href="{{ $reg }}" class="btn-gold min-h-[3.25rem] px-8 py-4 text-base shadow-xl shadow-gold-500/30 hover:-translate-y-0.5">रजिस्टर करें / Register
+                <a href="{{ $reg }}" class="btn-gold min-h-[3.25rem] px-8 py-4 text-base shadow-xl shadow-gold-500/30 hover:-translate-y-0.5">{{ __('रजिस्टर करें') }}
                     <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg>
                 </a>
-                <a href="{{ $log }}" class="btn min-h-[3.25rem] border border-gold-300/50 bg-transparent px-8 py-4 text-base text-gold-100 hover:bg-white/10">लॉगिन / Login</a>
+                <a href="{{ $log }}" class="btn min-h-[3.25rem] border border-gold-300/50 bg-transparent px-8 py-4 text-base text-gold-100 hover:bg-white/10">{{ __('लॉगिन') }}</a>
             </div>
             <ul class="mt-7 flex flex-wrap gap-2 text-sm font-medium">
                 @foreach (['जाँचे हुए प्रोफ़ाइल', 'प्राइवेसी पहले', 'समाज के लिए निःशुल्क'] as $chip)
                     <li class="inline-flex items-center gap-1.5 rounded-full bg-black/20 px-3 py-1.5 ring-1 ring-gold-300/25">
-                        <svg viewBox="0 0 24 24" class="h-4 w-4 text-gold-300" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>{{ $chip }}
+                        <svg viewBox="0 0 24 24" class="h-4 w-4 text-gold-300" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>{{ __($chip) }}
                     </li>
                 @endforeach
             </ul>
@@ -99,23 +99,23 @@
     {{-- clothesline of biodata cards: the samaj's own trade as a signature motif --}}
     <div class="hr-reveal relative z-[2] mx-auto mt-12 max-w-3xl px-4" style="--d:250ms">
         <x-brand.clothesline />
-        <p class="mt-5 text-center font-display text-lg leading-[1.7] text-gold-100">साफ़ नीयत, साफ़-सुथरे और भरोसेमंद रिश्ते</p>
-        <p class="text-center text-sm text-kumkum-100/70">Verified biodata. Photos stay blurred until you accept an interest.</p>
+        <p class="mt-5 text-center font-display text-lg leading-[1.7] text-gold-100">{{ __('साफ़ नीयत, साफ़-सुथरे और भरोसेमंद रिश्ते') }}</p>
+        <p class="text-center text-sm text-kumkum-100/70">{{ __('Verified biodata. Photos stay blurred until you accept an interest.') }}</p>
     </div>
 
     <svg class="absolute inset-x-0 bottom-0 z-[2] h-8 w-full text-cream sm:h-12" viewBox="0 0 1440 48" preserveAspectRatio="none" fill="currentColor" aria-hidden="true"><path d="M0 48V20c240 28 480 28 720 8s480-20 720 0v20z"/></svg>
 </section>
 
 {{-- COUNTERS --}}
-<section class="relative z-10 mx-auto -mt-2 max-w-5xl px-4" aria-label="Community statistics">
+<section class="relative z-10 mx-auto -mt-2 max-w-5xl px-4" aria-label="{{ __('Community statistics') }}">
     <div class="hr-reveal card relative overflow-hidden border-t-4 border-gold-400 px-2 py-6 text-center">
-        <p class="hr-eyebrow mb-4">समाज का भरोसा</p>
+        <p class="hr-eyebrow mb-4">{{ __('समाज का भरोसा') }}</p>
         <div class="grid grid-cols-3 divide-x divide-gold-200">
             @foreach ([['members', 'सदस्य', 'Members'], ['biodata', 'बायोडाटा', 'Biodata'], ['matches', 'रिश्ते जुड़े', 'Matches']] as [$k, $hi, $en])
                 <div class="px-2">
                     <div class="font-display text-3xl font-bold text-kumkum-700 sm:text-5xl" data-count="{{ $stats[$k] }}">{{ $stats[$k] }}</div>
-                    <div class="mt-1 text-base font-semibold text-ink-900">{{ $hi }}</div>
-                    <div class="text-xs uppercase tracking-wide text-ink-600">{{ $en }}</div>
+                    <div class="mt-1 text-base font-semibold text-ink-900">{{ __($hi) }}</div>
+                    <div class="text-xs uppercase tracking-wide text-ink-600">{{ __($en) }}</div>
                 </div>
             @endforeach
         </div>
@@ -126,24 +126,24 @@
 <section class="hr-paper relative mt-16 overflow-hidden py-16 sm:py-24" aria-labelledby="virasat-h">
     <div class="mx-auto max-w-6xl px-4">
         <div class="hr-reveal text-center">
-            <p class="hr-eyebrow">समाज की विरासत</p>
-            <h2 id="virasat-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">हमारे प्रेरणास्रोत, संत गाडगे महाराज</h2>
+            <p class="hr-eyebrow">{{ __('समाज की विरासत') }}</p>
+            <h2 id="virasat-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">{{ __('हमारे प्रेरणास्रोत, संत गाडगे महाराज') }}</h2>
         </div>
         <x-brand.rangoli class="mt-4" />
 
         <div class="mt-10 grid items-center gap-12 lg:grid-cols-[.8fr_1.2fr]">
             <div class="hr-reveal">
-                <x-brand.sant-portrait caption="संत गाडगे महाराज" />
+                <x-brand.sant-portrait :caption="__('संत गाडगे महाराज')" />
             </div>
 
             <div class="hr-reveal" style="--d:120ms">
-                <p class="text-lg leading-[1.9] text-ink-800">संत गाडगे महाराज (1876&ndash;1956) हमारे धोबी समाज में जन्मे वे महान संत और समाज-सुधारक हैं, जिनका जन्म महाराष्ट्र के अमरावती क्षेत्र के शेंडगाँव में हुआ। हाथ में झाड़ू और साथ में मिट्टी का गडगा लेकर वे गाँव-गाँव घूमे और स्वच्छता, सेवा और शिक्षा का संदेश दिया।</p>
-                <p class="mt-4 text-lg leading-[1.9] text-ink-800">उनकी सीख थी कि सच्ची पूजा इंसान की सेवा में है। हर वर्ष <strong class="text-kumkum-700">23 फ़रवरी</strong> को उनकी जयंती पर समाज उन्हें श्रद्धा से याद करता है।</p>
+                <p class="text-lg leading-[1.9] text-ink-800">{{ __('संत गाडगे महाराज (1876–1956) हमारे धोबी समाज में जन्मे वे महान संत और समाज-सुधारक हैं, जिनका जन्म महाराष्ट्र के अमरावती क्षेत्र के शेंडगाँव में हुआ। हाथ में झाड़ू और साथ में मिट्टी का गडगा लेकर वे गाँव-गाँव घूमे और स्वच्छता, सेवा और शिक्षा का संदेश दिया।') }}</p>
+                <p class="mt-4 text-lg leading-[1.9] text-ink-800">{!! __('उनकी सीख थी कि सच्ची पूजा इंसान की सेवा में है। हर वर्ष :date को उनकी जयंती पर समाज उन्हें श्रद्धा से याद करता है।', ['date' => '<strong class="text-kumkum-700">'.e(__('23 फ़रवरी')).'</strong>']) !!}</p>
 
                 {{-- quote: edit $gadgeQuote at the top of this file. OWNER: verify exact wording with samaj elders. --}}
                 <blockquote class="relative mt-7 overflow-hidden rounded-2xl border-l-4 border-kumkum-600 bg-white p-5 shadow-soft">
                     <x-brand.broom-gadga show="both" class="absolute right-3 top-3 h-10 w-auto text-kumkum-700/25" />
-                    <p class="text-sm font-semibold text-kumkum-600">संत गाडगे महाराज का संदेश</p>
+                    <p class="text-sm font-semibold text-kumkum-600">{{ __('संत गाडगे महाराज का संदेश') }}</p>
                     <p class="hr-h mt-1 text-xl leading-[1.8] text-ink-900">&ldquo;{{ $gadgeQuote }}&rdquo;</p>
                 </blockquote>
 
@@ -158,8 +158,8 @@
                             <span class="mx-auto grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-gold-300 to-gold-500 text-kumkum-800">
                                 <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ $p }}"/></svg>
                             </span>
-                            <span class="hr-h mt-2 block text-lg font-bold text-ink-900">{{ $t }}</span>
-                            <span class="block text-sm leading-snug text-ink-600">{{ $d }}</span>
+                            <span class="hr-h mt-2 block text-lg font-bold text-ink-900">{{ __($t) }}</span>
+                            <span class="block text-sm leading-snug text-ink-600">{{ __($d) }}</span>
                         </li>
                     @endforeach
                 </ul>
@@ -172,15 +172,15 @@
 <section class="mx-auto max-w-6xl px-4 py-16 sm:py-20" aria-labelledby="news-h">
     <div class="hr-reveal flex items-end justify-between">
         <div>
-            <p class="hr-eyebrow">Samaj updates</p>
-            <h2 id="news-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">समाचार और पोस्टर</h2>
+            <p class="hr-eyebrow">{{ __('Samaj updates') }}</p>
+            <h2 id="news-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">{{ __('समाचार और पोस्टर') }}</h2>
         </div>
         <div class="hidden gap-2 sm:flex">
-            <button type="button" class="grid h-11 w-11 place-items-center rounded-full bg-white text-kumkum-700 shadow-soft ring-1 ring-gold-200 transition hover:-translate-y-0.5 hover:bg-gold-50" data-slide="-1" aria-label="Previous"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-            <button type="button" class="grid h-11 w-11 place-items-center rounded-full bg-white text-kumkum-700 shadow-soft ring-1 ring-gold-200 transition hover:-translate-y-0.5 hover:bg-gold-50" data-slide="1" aria-label="Next"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+            <button type="button" class="grid h-11 w-11 place-items-center rounded-full bg-white text-kumkum-700 shadow-soft ring-1 ring-gold-200 transition hover:-translate-y-0.5 hover:bg-gold-50" data-slide="-1" aria-label="{{ __('Previous') }}"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button type="button" class="grid h-11 w-11 place-items-center rounded-full bg-white text-kumkum-700 shadow-soft ring-1 ring-gold-200 transition hover:-translate-y-0.5 hover:bg-gold-50" data-slide="1" aria-label="{{ __('Next') }}"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
         </div>
     </div>
-    <div id="newsrow" class="hr-snap -mx-4 mt-6 flex gap-4 overflow-x-auto px-4 pb-4" tabindex="0" aria-label="News carousel">
+    <div id="newsrow" class="hr-snap -mx-4 mt-6 flex gap-4 overflow-x-auto px-4 pb-4" tabindex="0" aria-label="{{ __('News carousel') }}">
         @forelse ($news as $i => $n)
             <article class="card w-[82%] shrink-0 overflow-hidden transition hover:-translate-y-1 hover:shadow-glow sm:w-[340px]">
                 @if ($n->image)
@@ -189,7 +189,7 @@
                     <div class="hr-pattern grid h-52 place-items-center bg-gradient-to-br {{ $grads[$i % 4] }} p-5 text-center font-display text-2xl font-bold leading-[1.6] text-white">{{ $n->title }}</div>
                 @endif
                 <div class="p-4">
-                    <span class="badge-ink">{{ $n->type === 'poster' ? 'Poster' : 'News' }}</span>
+                    <span class="badge-ink">{{ $n->type === 'poster' ? __('Poster') : __('News') }}</span>
                     <h3 class="mt-2 text-lg font-bold leading-snug">{{ $n->title }}</h3>
                     @if ($n->body)<p class="mt-1 line-clamp-3 text-base text-ink-800/80">{{ $n->body }}</p>@endif
                     <p class="mt-2 text-xs text-ink-600">{{ $n->created_at?->format('d M Y') }}</p>
@@ -200,7 +200,7 @@
                 <article class="card w-[82%] shrink-0 overflow-hidden transition hover:-translate-y-1 hover:shadow-glow sm:w-[340px]">
                     <div class="hr-pattern grid h-44 place-items-center bg-gradient-to-br {{ $grads[$s['g']] }} p-5 text-center font-display text-3xl font-bold leading-[1.6] text-white">{{ $s['t'] }}</div>
                     <div class="p-4">
-                        <span class="badge-ink">Samaj</span>
+                        <span class="badge-ink">{{ __('Samaj') }}</span>
                         <p class="mt-2 text-base text-ink-800/90">{{ $s['b'] }}</p>
                     </div>
                 </article>
@@ -214,8 +214,8 @@
 <section class="hr-sandal py-16" aria-labelledby="ev-h">
     <div class="mx-auto max-w-4xl px-4">
         <div class="hr-reveal text-center">
-            <p class="hr-eyebrow">Upcoming</p>
-            <h2 id="ev-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">आगामी कार्यक्रम</h2>
+            <p class="hr-eyebrow">{{ __('Upcoming') }}</p>
+            <h2 id="ev-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">{{ __('आगामी कार्यक्रम') }}</h2>
         </div>
         <ul class="mt-8 space-y-3">
             @foreach ($events as $e)
@@ -237,9 +237,9 @@
 {{-- HOW IT WORKS --}}
 <section class="mx-auto max-w-6xl px-4 py-16 sm:py-24" aria-labelledby="how-h">
     <div class="hr-reveal text-center">
-        <p class="hr-eyebrow">How it works</p>
-        <h2 id="how-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">कैसे काम करता है</h2>
-        <p class="mx-auto mt-2 max-w-md text-base text-ink-700">चार आसान कदम, अपनों के बीच रिश्ते तक।</p>
+        <p class="hr-eyebrow">{{ __('How it works') }}</p>
+        <h2 id="how-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">{{ __('कैसे काम करता है') }}</h2>
+        <p class="mx-auto mt-2 max-w-md text-base text-ink-700">{{ __('चार आसान कदम, अपनों के बीच रिश्ते तक।') }}</p>
     </div>
     @php
         $steps = [
@@ -262,8 +262,8 @@
                         <span class="absolute -right-1 -top-1 grid h-6 w-6 place-items-center rounded-full bg-gold-400 text-xs font-extrabold text-ink-950 ring-2 ring-cream">{{ $i + 1 }}</span>
                     </div>
                     <div class="card-pad flex-1 lg:mt-5">
-                        <h3 class="text-lg font-bold leading-snug">{{ $t }}</h3>
-                        <p class="mt-1 text-base text-ink-700">{{ $d }}</p>
+                        <h3 class="text-lg font-bold leading-snug">{{ __($t) }}</h3>
+                        <p class="mt-1 text-base text-ink-700">{{ __($d) }}</p>
                     </div>
                 </li>
             @endforeach
@@ -275,24 +275,24 @@
 <section class="hr-neel hr-pattern relative overflow-hidden py-16 text-white sm:py-24" aria-labelledby="feat-h">
     <div class="relative mx-auto max-w-6xl px-4">
         <div class="hr-reveal mx-auto max-w-2xl text-center">
-            <p class="hr-eyebrow hr-eyebrow-light">Why Samaj Book</p>
-            <h2 id="feat-h" class="hr-h mt-2 text-3xl font-bold sm:text-4xl">आपकी प्राइवेसी, हमारी प्राथमिकता</h2>
-            <p class="mt-3 text-base text-neel-100">आपकी फ़ोटो और नंबर कौन देखे, यह आप तय करते हैं। <span class="text-neel-200">(कार्ड पर टैप करें या माउस ले जाएँ।)</span></p>
+            <p class="hr-eyebrow hr-eyebrow-light">{{ __('Why Samaj Book') }}</p>
+            <h2 id="feat-h" class="hr-h mt-2 text-3xl font-bold sm:text-4xl">{{ __('आपकी प्राइवेसी, हमारी प्राथमिकता') }}</h2>
+            <p class="mt-3 text-base text-neel-100">{{ __('आपकी फ़ोटो और नंबर कौन देखे, यह आप तय करते हैं।') }} <span class="text-neel-200">{{ __('(कार्ड पर टैप करें या माउस ले जाएँ।)') }}</span></p>
         </div>
 
         <div class="mt-10 grid items-center gap-8 lg:grid-cols-2">
-            <div class="hr-reveal pub-privacy mx-auto w-full max-w-sm outline-none" tabindex="0" role="img" aria-label="Illustration: contact hidden until interest is accepted, photo blurred with watermark">
+            <div class="hr-reveal pub-privacy mx-auto w-full max-w-sm outline-none" tabindex="0" role="img" aria-label="{{ __('Illustration: contact hidden until interest is accepted, photo blurred with watermark') }}">
                 <div class="rounded-[1.75rem] bg-cream p-3 text-ink-950 shadow-2xl ring-2 ring-gold-300/60">
                     <div class="relative h-52 overflow-hidden rounded-2xl bg-gradient-to-br from-gold-300 via-kumkum-400 to-kumkum-800">
                         <svg viewBox="0 0 100 100" class="pub-blur-demo absolute inset-0 m-auto h-40 w-40 text-white/80" fill="currentColor" aria-hidden="true"><circle cx="50" cy="36" r="20"/><path d="M12 96c0-22 17-36 38-36s38 14 38 36z"/></svg>
                         <div class="absolute inset-0 grid place-items-center overflow-hidden" aria-hidden="true">
                             <span class="-rotate-12 select-none whitespace-nowrap font-display text-2xl font-bold tracking-widest text-white/30">SAMAJBOOK &middot; SAMAJBOOK</span>
                         </div>
-                        <span class="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-kumkum-800"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 15a3 3 0 100-6 3 3 0 000 6z"/></svg>Photo blur + watermark</span>
+                        <span class="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-kumkum-800"><svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 15a3 3 0 100-6 3 3 0 000 6z"/></svg>{{ __('Photo blur + watermark') }}</span>
                     </div>
                     <div class="mt-3 flex items-center justify-between gap-3 rounded-2xl bg-sandal px-4 py-3">
                         <div>
-                            <div class="text-[11px] font-semibold uppercase tracking-wide text-ink-700">Contact</div>
+                            <div class="text-[11px] font-semibold uppercase tracking-wide text-ink-700">{{ __('Contact') }}</div>
                             <div class="relative font-mono text-base font-bold tracking-wider text-ink-900">
                                 <span class="pub-lock-shut" aria-hidden="true">98•••• ••••0</span>
                                 <span class="pub-lock-open absolute left-0 top-0" aria-hidden="true">98765 43210</span>
@@ -327,8 +327,8 @@
                         <div class="grid h-10 w-10 place-items-center rounded-xl bg-gold-400 text-ink-950">
                             <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ $p }}"/></svg>
                         </div>
-                        <h3 class="mt-3 font-sans text-base font-bold leading-snug">{{ $t }}</h3>
-                        <p class="mt-1 text-base leading-snug text-neel-100">{{ $d }}</p>
+                        <h3 class="mt-3 font-sans text-base font-bold leading-snug">{{ __($t) }}</h3>
+                        <p class="mt-1 text-base leading-snug text-neel-100">{{ __($d) }}</p>
                     </div>
                 @endforeach
             </div>
@@ -339,8 +339,8 @@
 {{-- SUCCESS STORIES --}}
 <section class="mx-auto max-w-6xl px-4 py-16 sm:py-24" aria-labelledby="ss-h">
     <div class="hr-reveal text-center">
-        <p class="hr-eyebrow">Success stories</p>
-        <h2 id="ss-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">सफल कहानियाँ</h2>
+        <p class="hr-eyebrow">{{ __('Success stories') }}</p>
+        <h2 id="ss-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">{{ __('सफल कहानियाँ') }}</h2>
     </div>
     @if ($stories->isNotEmpty())
         <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -372,9 +372,9 @@
             </div>
             <div class="card relative overflow-hidden bg-gradient-to-br from-white to-gold-50 p-7">
                 <span class="absolute -right-2 -top-4 font-display text-8xl leading-none text-gold-300/60" aria-hidden="true">&rdquo;</span>
-                <p class="relative font-display text-xl font-bold leading-[1.7]">आपकी कहानी यहाँ हो सकती है</p>
-                <p class="relative mt-2 text-base leading-relaxed text-ink-700">अपना जीवनसाथी खोजें और अपनी खुशी की खबर पूरे समाज के साथ बाँटें।</p>
-                <a href="{{ $reg }}" class="btn-primary relative mt-5 min-h-[2.75rem]">अभी शुरू करें</a>
+                <p class="relative font-display text-xl font-bold leading-[1.7]">{{ __('आपकी कहानी यहाँ हो सकती है') }}</p>
+                <p class="relative mt-2 text-base leading-relaxed text-ink-700">{{ __('अपना जीवनसाथी खोजें और अपनी खुशी की खबर पूरे समाज के साथ बाँटें।') }}</p>
+                <a href="{{ $reg }}" class="btn-primary relative mt-5 min-h-[2.75rem]">{{ __('अभी शुरू करें') }}</a>
             </div>
         </div>
     @endif
@@ -384,29 +384,29 @@
 <section class="hr-sandal py-16 sm:py-24" aria-labelledby="faq-h">
     <div class="mx-auto max-w-3xl px-4">
         <div class="hr-reveal text-center">
-            <p class="hr-eyebrow">FAQ</p>
-            <h2 id="faq-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">अक्सर पूछे जाने वाले प्रश्न</h2>
+            <p class="hr-eyebrow">{{ __('FAQ') }}</p>
+            <h2 id="faq-h" class="hr-h mt-2 text-3xl font-bold text-ink-900 sm:text-4xl">{{ __('अक्सर पूछे जाने वाले प्रश्न') }}</h2>
         </div>
         <div class="hr-faq mt-8 space-y-3">
             @foreach ([
-                ['क्या यह सच में फ्री है? / Is it free?', 'हाँ, समाज के सदस्यों के लिए पूरी तरह निःशुल्क है। Yes, free for samaj members.'],
-                ['मेरा फ़ोन नंबर कौन देख सकता है?', 'केवल वही जिसका इंटरेस्ट आप स्वीकार करें। Only people whose interest you accept.'],
+                ['क्या यह सच में फ्री है?', 'हाँ, समाज के सदस्यों के लिए पूरी तरह निःशुल्क है।'],
+                ['मेरा फ़ोन नंबर कौन देख सकता है?', 'केवल वही जिसका इंटरेस्ट आप स्वीकार करें।'],
                 ['रजिस्ट्रेशन के बाद क्या होता है?', 'एडमिन आपकी जानकारी जाँचकर अप्रूव करते हैं, फिर पूरा एक्सेस मिलता है।'],
-                ['कम से कम उम्र क्या है?', 'लड़की 18 और लड़के की 21 वर्ष। Minimum age: 18 (girl) and 21 (boy).'],
+                ['कम से कम उम्र क्या है?', 'लड़की 18 और लड़के की 21 वर्ष।'],
                 ['क्या आधार नंबर चाहिए?', 'नहीं, हम आधार नंबर नहीं माँगते और न ही सेव करते हैं।'],
             ] as $i => [$q, $a])
                 <details class="hr-reveal overflow-hidden rounded-2xl border border-gold-200 bg-white/70 transition" style="--d: {{ $i * 60 }}ms">
                     <summary class="flex min-h-[3.5rem] cursor-pointer items-center justify-between gap-3 px-4 py-3 text-base font-semibold text-ink-900 sm:px-5">
-                        <span>{{ $q }}</span>
+                        <span>{{ __($q) }}</span>
                         <span class="hr-plus grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gold-100 text-kumkum-700">
                             <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
                         </span>
                     </summary>
-                    <p class="border-t border-gold-100 px-4 pb-4 pt-3 text-base leading-relaxed text-ink-800 sm:px-5">{{ $a }}</p>
+                    <p class="border-t border-gold-100 px-4 pb-4 pt-3 text-base leading-relaxed text-ink-800 sm:px-5">{{ __($a) }}</p>
                 </details>
             @endforeach
         </div>
-        <p class="mt-6 text-center text-base"><a href="{{ route('page.faq') }}" class="font-semibold text-kumkum-700 underline">सभी प्रश्न देखें / See all</a></p>
+        <p class="mt-6 text-center text-base"><a href="{{ route('page.faq') }}" class="font-semibold text-kumkum-700 underline">{{ __('सभी प्रश्न देखें') }}</a></p>
     </div>
 </section>
 
@@ -417,11 +417,11 @@
             <x-brand.diya class="absolute bottom-4 left-4 hidden h-12 w-14 sm:block" />
             <x-brand.kalash class="absolute bottom-4 right-5 hidden h-24 w-auto sm:block" />
             <x-brand.broom-gadga show="both" class="mx-auto mb-3 h-10 w-auto text-gold-200" />
-            <h2 class="hr-brand text-3xl sm:text-5xl">आज ही अपना सफ़र शुरू करें</h2>
-            <p class="mx-auto mt-3 max-w-lg text-lg text-kumkum-100/90">अपने समाज के परिवार से जुड़ें। एक मिनट में रजिस्टर करें और सही रिश्ते को आप तक आने दें।</p>
+            <h2 class="hr-brand text-3xl sm:text-5xl">{{ __('आज ही अपना सफ़र शुरू करें') }}</h2>
+            <p class="mx-auto mt-3 max-w-lg text-lg text-kumkum-100/90">{{ __('अपने समाज के परिवार से जुड़ें। एक मिनट में रजिस्टर करें और सही रिश्ते को आप तक आने दें।') }}</p>
             <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <a href="{{ $reg }}" class="btn-gold min-h-[3.25rem] px-10 py-4 text-base shadow-xl hover:-translate-y-0.5">रजिस्टर करें</a>
-                <button type="button" data-install class="btn min-h-[3.25rem] border border-gold-300/50 bg-transparent px-8 py-4 text-base text-gold-100 hover:bg-white/10" hidden>Install App</button>
+                <a href="{{ $reg }}" class="btn-gold min-h-[3.25rem] px-10 py-4 text-base shadow-xl hover:-translate-y-0.5">{{ __('रजिस्टर करें') }}</a>
+                <button type="button" data-install class="btn min-h-[3.25rem] border border-gold-300/50 bg-transparent px-8 py-4 text-base text-gold-100 hover:bg-white/10" hidden>{{ __('Install App') }}</button>
             </div>
         </div>
     </div>

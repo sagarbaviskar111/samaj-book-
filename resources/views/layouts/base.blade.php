@@ -20,6 +20,7 @@
     @if(\App\Support\DevLogin::enabled() && auth()->check())
         @include('partials.dev-switcher')
     @endif
+    @include('partials.screen-guard')
     @stack('scripts')
 </body>
 </html>

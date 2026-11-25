@@ -1,6 +1,6 @@
 @props(['flame' => true])
 {{-- Clay diya with a flickering flame. --}}
-<svg viewBox="0 0 80 70" role="img" aria-label="दीया" {{ $attributes->class(['block overflow-visible']) }}>
+<svg viewBox="0 0 80 70" role="img" aria-label="{{ __('दीया') }}" {{ $attributes->class(['block overflow-visible']) }}>
     <ellipse cx="40" cy="22" rx="26" ry="20" fill="#ffd23f" class="{{ $flame ? 'hr-glow' : '' }}" opacity=".35"/>
     @if($flame)
         <g class="hr-flame" style="transform-origin: 40px 44px">

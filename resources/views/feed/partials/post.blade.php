@@ -2,14 +2,17 @@
 @php($ro = $me->isPending())
 <article class="card overflow-hidden" data-post="{{ $post->id }}">
     <div class="flex items-center gap-3 px-4 pt-4">
-        <span class="rounded-full bg-gradient-to-tr from-gold-400 via-kumkum-500 to-kumkum-700 p-[2px]">@include('feed.partials.avatar', ['u' => $post->user, 'size' => 'h-10 w-10'])</span>
+        <a href="{{ route('members.show', $post->user_id) }}" class="rounded-full bg-gradient-to-tr from-gold-400 via-kumkum-500 to-kumkum-700 p-[2px]" aria-label="{{ $post->user->name }}">@include('feed.partials.avatar', ['u' => $post->user, 'size' => 'h-10 w-10'])</a>
         <div class="min-w-0 flex-1">
-            <p class="truncate text-sm font-semibold text-ink-900">{{ $post->user->name }}</p>
+            <a href="{{ route('members.show', $post->user_id) }}" class="block truncate text-sm font-semibold text-ink-900 hover:underline">{{ $post->user->name }}</a>
             <p class="truncate text-sm text-ink-700">
                 @if($post->user->city){{ $post->user->city }} &middot; @endif{{ $post->created_at->diffForHumans() }}
                 @if($post->visibility === 'city') &middot; <span class="font-medium text-gold-600">{{ __('सिर्फ़ मेरा शहर') }}</span> @endif
             </p>
         </div>
+        @if(! $ro && $post->user_id !== $me->id && ! $me->isAdmin() && ! $me->isFollowing($post->user_id))
+            @include('members.partials.follow-button', ['m' => $post->user, 'small' => true, 'followsMe' => false])
+        @endif
         @unless($ro)
         <details class="relative">
             <summary class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full text-ink-600 transition hover:bg-ink-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ink-100" aria-label="{{ __('और विकल्प') }}" title="{{ __('और विकल्प') }}">
@@ -35,7 +38,7 @@
         {{-- single tap opens the post, double tap likes (see scripts) --}}
         <a href="{{ route('posts.show', $post) }}" @unless($ro) data-dbl @endunless class="mb-media relative mt-3 block px-3" aria-label="{{ __('पोस्ट खोलें') }}">
             <span class="relative block overflow-hidden rounded-2xl bg-ink-50 ring-1 ring-ink-100">
-                <img src="{{ asset('storage/'.$post->image) }}" alt="{{ \Illuminate\Support\Str::limit($post->body ?: __('पोस्ट की फ़ोटो').': '.$post->user->name, 80) }}" loading="lazy" class="max-h-[34rem] min-h-[12rem] w-full object-cover">
+                <img src="{{ asset('storage/'.$post->image) }}" alt="{{ \Illuminate\Support\Str::limit($post->body ?: __('पोस्ट की फ़ोटो: :name', ['name' => $post->user->name]), 80) }}" loading="lazy" class="max-h-[34rem] min-h-[12rem] w-full object-cover">
                 <span class="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-ink-950/15 to-transparent"></span>
             </span>
         </a>

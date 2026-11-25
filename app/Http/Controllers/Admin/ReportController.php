@@ -83,7 +83,7 @@ class ReportController extends Controller
             'biodata' => Biodata::whereKey($r->target_id)->value('user_id'),
             default => null,
         };
-        abort_unless($userId, 422, 'No user to block');
+        abort_unless($userId, 422, __('No user to block'));
 
         $u = AdminScope::users(User::query())->findOrFail($userId); // never admins
         $u->status = 'blocked';

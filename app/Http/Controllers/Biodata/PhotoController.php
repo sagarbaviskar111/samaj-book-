@@ -41,7 +41,7 @@ class PhotoController extends Controller
             $biodata->save();
         }
 
-        return back()->with('status', $added ? "{$added} फ़ोटो जोड़ दी गई।" : 'यह फ़ोटो पढ़ी नहीं जा सकी। दूसरी फ़ोटो चुनिए।');
+        return back()->with('status', $added ? __(':n फ़ोटो जोड़ दी गई।', ['n' => $added]) : __('यह फ़ोटो पढ़ी नहीं जा सकी। दूसरी फ़ोटो चुनिए।'));
     }
 
     public function destroy(Request $request, BiodataPhoto $photo): RedirectResponse
@@ -56,7 +56,7 @@ class PhotoController extends Controller
             $next->update(['is_primary' => true]);
         }
 
-        return back()->with('status', 'फ़ोटो हटा दी गई।');
+        return back()->with('status', __('फ़ोटो हटा दी गई।'));
     }
 
     public function primary(Request $request, BiodataPhoto $photo): RedirectResponse
@@ -71,7 +71,7 @@ class PhotoController extends Controller
             $other->update(['sort' => $i++]);
         }
 
-        return back()->with('status', 'मुख्य फ़ोटो बदल दी गई।');
+        return back()->with('status', __('मुख्य फ़ोटो बदल दी गई।'));
     }
 
     /** Privacy-enforcing photo endpoint. ?size=thumb|full */

@@ -149,7 +149,7 @@ class ShareAndPdfTest extends TestCase
 
         $this->actingAs($owner)->get(route('biodata.mine'))->assertOk()->assertSee('data-share-open', false)->assertSee('मंज़ूर होने के बाद');
         $this->actingAs($owner)->get(route('biodata.show', $ok))->assertOk()->assertSee('shareSheet', false);
-        $this->actingAs($this->member())->get(route('biodata.show', $ok))->assertOk()->assertDontSee('shareSheet', false);
+        $this->actingAs($this->member())->get(route('biodata.show', $ok))->assertRedirect(); // no own biodata: locked out
     }
 
     public function test_pdf_downloads_for_owner_with_and_without_contact(): void

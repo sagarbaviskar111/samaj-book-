@@ -8,11 +8,11 @@
 
     $menu = $pending ? [] : [
         'मेरा काम' => [
-            ['biodata.mine', 'मेरा बायोडाटा', $stats['biodatas'].' '.__('बायोडाटा'), 'M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.12a7.5 7.5 0 0 1 15 0'],
-            ['interests.index', 'मेरे रिश्ते', $stats['received'] ? $stats['received'].' '.__('नए अनुरोध आपके जवाब का इंतज़ार कर रहे हैं') : __('भेजी हुई, आई हुई और मंज़ूर पसंद'), 'M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z'],
-            ['shortlist.index', 'पसंद की सूची', $stats['shortlist'].' '.__('सेव किए हुए'), 'M11.48 3.5a.56.56 0 0 1 1.04 0l2.13 5.11 5.52.44c.5.04.7.66.32.99l-4.2 3.6 1.28 5.38a.56.56 0 0 1-.84.61L12 16.76l-4.73 2.87a.56.56 0 0 1-.84-.61l1.28-5.38-4.2-3.6a.56.56 0 0 1 .32-.99l5.52-.44 2.13-5.11Z'],
+            ['biodata.mine', 'मेरा बायोडाटा', __(':n बायोडाटा', ['n' => $stats['biodatas']]), 'M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.12a7.5 7.5 0 0 1 15 0'],
+            ['interests.index', 'मेरे रिश्ते', $stats['received'] ? __(':n नए अनुरोध आपके जवाब का इंतज़ार कर रहे हैं', ['n' => $stats['received']]) : __('भेजी हुई, आई हुई और मंज़ूर पसंद'), 'M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z'],
+            ['shortlist.index', 'पसंद की सूची', __(':n सेव किए हुए', ['n' => $stats['shortlist']]), 'M11.48 3.5a.56.56 0 0 1 1.04 0l2.13 5.11 5.52.44c.5.04.7.66.32.99l-4.2 3.6 1.28 5.38a.56.56 0 0 1-.84.61L12 16.76l-4.73 2.87a.56.56 0 0 1-.84-.61l1.28-5.38-4.2-3.6a.56.56 0 0 1 .32-.99l5.52-.44 2.13-5.11Z'],
             ['events.index', 'कार्यक्रम', __('नाम लिखवाएँ और जुड़ें'), 'M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5'],
-            ['notifications.index', 'सूचनाएँ', $stats['unread'] ? $stats['unread'].' '.__('नई') : __('सब देख लिया'), 'M14.86 17.08a23.85 23.85 0 0 0 5.45-1.31A8.97 8.97 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.97 8.97 0 0 1-2.31 6.02c1.73.64 3.56 1.08 5.46 1.31m5.71 0a24.26 24.26 0 0 1-5.71 0m5.71 0a3 3 0 1 1-5.71 0'],
+            ['notifications.index', 'सूचनाएँ', $stats['unread'] ? __(':n नई', ['n' => $stats['unread']]) : __('सब देख लिया'), 'M14.86 17.08a23.85 23.85 0 0 0 5.45-1.31A8.97 8.97 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.97 8.97 0 0 1-2.31 6.02c1.73.64 3.56 1.08 5.46 1.31m5.71 0a24.26 24.26 0 0 1-5.71 0m5.71 0a3 3 0 1 1-5.71 0'],
         ],
         'अकाउंट' => [
             ['profile.edit', 'प्रोफ़ाइल बदलें', __('नाम, फ़ोटो, जगह'), 'm16.86 4.49 1.69-1.69a1.88 1.88 0 1 1 2.65 2.65L6.83 19.82a4.5 4.5 0 0 1-1.9 1.13L2.25 21.75l.8-2.69a4.5 4.5 0 0 1 1.13-1.9L16.86 4.49Z'],
@@ -110,9 +110,9 @@
                     @endif
                     <div class="min-w-0 flex-1">
                         <p class="truncate font-semibold text-ink-900">{{ $b->name }}</p>
-                        <p class="truncate text-xs text-ink-700">{{ $b->age }} {{ __('साल') }} · {{ ['male' => __('लड़का'), 'female' => __('लड़की')][$b->gender] ?? ucfirst($b->gender) }} · {{ $b->current_city ?: $b->district }}</p>
+                        <p class="truncate text-xs text-ink-700">{{ __(':n साल', ['n' => $b->age]) }} · {{ ['male' => __('लड़का'), 'female' => __('लड़की')][$b->gender] ?? ucfirst($b->gender) }} · {{ $b->current_city ?: $b->district }}</p>
                     </div>
-                    <span class="{{ $statusChip[$b->status] ?? 'badge-ink' }}">{{ ['approved' => 'मंज़ूर', 'pending' => 'जाँच बाकी', 'draft' => 'अधूरा', 'rejected' => 'अस्वीकृत', 'paused' => 'रुका हुआ', 'married' => 'विवाह तय'][$b->status] ?? ucfirst($b->status) }}</span>
+                    <span class="{{ $statusChip[$b->status] ?? 'badge-ink' }}">{{ ['approved' => __('मंज़ूर'), 'pending' => __('जाँच बाकी'), 'draft' => __('अधूरा'), 'rejected' => __('अस्वीकृत'), 'paused' => __('रुका हुआ'), 'married' => __('विवाह तय')][$b->status] ?? ucfirst($b->status) }}</span>
                 </a>
             @empty
                 <div class="relative overflow-hidden rounded-2xl bg-gold-50 p-5 text-center ring-1 ring-gold-200">
@@ -153,10 +153,10 @@
 
         {{-- language --}}
         <section class="card card-pad">
-            <h2 class="text-base font-bold text-ink-700">{{ __('भाषा') }} / Language</h2>
+            <h2 class="text-base font-bold text-ink-700">{{ __('भाषा') }}</h2>
             <div class="mt-3 flex flex-wrap gap-2">
                 @foreach(['hi' => 'हिन्दी', 'en' => 'English', 'mr' => 'मराठी'] as $code => $label)
-                    <a href="{{ route('locale.switch', $code) }}" class="{{ ($user->language ?? 'hi') === $code ? 'btn-primary' : 'btn-ghost' }} btn-sm">{{ $label }}</a>
+                    <a href="{{ route('locale.switch', $code) }}" class="{{ app()->getLocale() === $code ? 'btn-primary' : 'btn-ghost' }} btn-sm">{{ $label }}</a>
                 @endforeach
             </div>
         </section>
@@ -188,7 +188,7 @@
                 <details class="text-sm" @if($errors->delete->any()) open @endif>
                     <summary class="cursor-pointer list-none font-semibold text-rose-600 hover:underline">{{ __('मेरा अकाउंट हटाएँ') }}</summary>
                     <form method="POST" action="{{ route('profile.destroy') }}" class="mt-3 space-y-2 rounded-2xl bg-rose-50 p-4"
-                          onsubmit="return confirm('अकाउंट और सारी जानकारी हमेशा के लिए हट जाएगी। क्या आप पक्का हटाना चाहते हैं?')">
+                          onsubmit="return confirm(@json(__('अकाउंट और सारी जानकारी हमेशा के लिए हट जाएगी। क्या आप पक्का हटाना चाहते हैं?')))">
                         @csrf @method('DELETE')
                         <p class="text-base text-rose-800">{{ __('आपकी प्रोफ़ाइल, बायोडाटा, फ़ोटो, पोस्ट और पसंद हमेशा के लिए हटा दी जाएँगी। यह वापस नहीं हो सकता।') }}</p>
                         <input type="password" name="confirm_password" placeholder="{{ __('पक्का करने के लिए पासवर्ड डालें') }}" aria-label="{{ __('पासवर्ड') }}" class="input" autocomplete="current-password" required>

@@ -33,7 +33,7 @@ class BiodataSearchTest extends SearchTestCase
 
     public function test_without_own_biodata_gets_lite_mode_with_choices(): void
     {
-        $this->actingAs($this->member())->get('/biodata')->assertOk()->assertSee('मेरा बायोडाटा बनाएँ')->assertSee('किसी और के लिए देख रहे हैं');
+        $this->actingAs($this->member())->get('/biodata')->assertOk()->assertSee('मेरा बायोडाटा बनाएँ')->assertDontSee('किसी और के लिए देख रहे हैं');
     }
 
     public function test_filters_age_district_education_verified_keyword(): void

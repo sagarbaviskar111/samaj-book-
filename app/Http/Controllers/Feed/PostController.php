@@ -22,7 +22,7 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             $path = $this->storeImage($request->file('image'));
             if (! $path) {
-                return back()->withErrors(['image' => 'Could not process this image.'])->withInput();
+                return back()->withErrors(['image' => __('Could not process this image.')])->withInput();
             }
         }
 
@@ -33,7 +33,7 @@ class PostController extends Controller
             'status' => 'visible',
         ]);
 
-        return redirect()->route('home')->with('status', 'Your post is live.');
+        return redirect()->route('home')->with('status', __('Your post is live.'));
     }
 
     public function show(Request $request, Post $post)
@@ -61,7 +61,7 @@ class PostController extends Controller
             return response()->json(['ok' => true]);
         }
 
-        return redirect()->route('home')->with('status', 'Post deleted.');
+        return redirect()->route('home')->with('status', __('Post deleted.'));
     }
 
     /** Re-encode through GD: strips EXIF, applies orientation, caps at 1600px. */

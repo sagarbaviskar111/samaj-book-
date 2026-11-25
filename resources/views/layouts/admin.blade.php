@@ -8,6 +8,7 @@
         ['admin.dashboard', 'Dashboard', 'M3 12l9-9 9 9M5 10v10h5v-6h4v6h5V10', null, 'admin.dashboard'],
         ['admin.users.index', 'Members', 'M15 19a6 6 0 00-12 0M9 11a4 4 0 100-8 4 4 0 000 8zm12 8a6 6 0 00-4-5.6M16 3.4a4 4 0 010 7.2', $pendingUsers, 'admin.users.*'],
         ['admin.biodata.index', 'Biodata', 'M9 12h6M9 16h6M7 3h7l5 5v13H7zM14 3v5h5', $pendingBio, 'admin.biodata.*'],
+        ['admin.interests.index', 'Requests', 'M4 12h13m-5-5l5 5-5 5M20 5v14', null, 'admin.interests.*'],
         ['admin.reports.index', 'Reports', 'M5 21V4m0 0h11l-2 4 2 4H5', $openReports, 'admin.reports.*'],
         ['admin.news.index', 'News & Events', 'M4 5h13v14H6a2 2 0 01-2-2V5zm13 3h3v9a2 2 0 01-2 2M8 9h5M8 13h5', null, 'admin.news.*'],
         ['admin.events.index', 'Events', 'M8 3v3M16 3v3M4 9h16M5 5h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zM9 14h2m2 0h2', null, 'admin.events.*'],
@@ -58,9 +59,9 @@
         <div class="flex items-center justify-between px-5 pb-3 pt-5">
             <a href="{{ route('admin.dashboard') }}" class="flex min-w-0 flex-col gap-1.5">
                 <span class="adm-label"><x-brand.logo size="h-9" :wordmark="true" :light="true" /></span>
-                <span class="adm-hide-collapsed w-fit rounded-full px-2 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wider {{ $isSuper ? 'bg-kumkum-800 text-gold-300 ring-1 ring-gold-400/60' : ($isFull ? 'bg-gold-400 text-ink-950' : 'bg-tulsi-500 text-white') }}">{{ $isSuper ? 'SUPERADMIN' : ($isFull ? 'ADMIN' : 'SUB-ADMIN · '.$subArea) }}</span>
+                <span class="adm-hide-collapsed w-fit rounded-full px-2 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wider {{ $isSuper ? 'bg-kumkum-800 text-gold-300 ring-1 ring-gold-400/60' : ($isFull ? 'bg-gold-400 text-ink-950' : 'bg-tulsi-500 text-white') }}">{{ $isSuper ? __('SUPERADMIN') : ($isFull ? __('ADMIN') : __('SUB-ADMIN').' · '.$subArea) }}</span>
             </a>
-            <button type="button" class="rounded-full p-1.5 hover:bg-white/10 lg:hidden" onclick="admMenu(false)" aria-label="Close menu">
+            <button type="button" class="rounded-full p-1.5 hover:bg-white/10 lg:hidden" onclick="admMenu(false)" aria-label="{{ __('Close menu') }}">
                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
             </button>
         </div>
@@ -92,7 +93,7 @@
 
     <header class="adm-topbar sticky top-0 z-30 border-b border-ink-100/60">
         <div class="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 lg:px-8">
-            <button type="button" class="rounded-xl p-2 hover:bg-sandal lg:hidden" onclick="admMenu(true)" aria-label="Open menu">
+            <button type="button" class="rounded-xl p-2 hover:bg-sandal lg:hidden" onclick="admMenu(true)" aria-label="{{ __('Open menu') }}">
                 <svg class="h-6 w-6 text-ink-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h10"/></svg>
             </button>
             <div class="min-w-0 flex-1">

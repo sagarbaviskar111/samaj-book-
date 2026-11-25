@@ -24,7 +24,7 @@
         }
         paint(!on, Math.max(0, parseInt(cnt.textContent, 10) + (on ? -1 : 1)));
         send(like.dataset.like, 'POST').then(function (d) { paint(d.liked, d.count); })
-            .catch(function () { paint(on, parseInt(cnt.textContent, 10) + (on ? 1 : -1)); toast('पसंद नहीं हो पाई। दोबारा कोशिश करें।'); });
+            .catch(function () { paint(on, parseInt(cnt.textContent, 10) + (on ? 1 : -1)); toast(@json(__('पसंद नहीं हो पाई। दोबारा कोशिश करें।'))); });
     }
     function burst(host) {
         var h = document.createElement('span');
@@ -62,43 +62,43 @@
 
         var rep = e.target.closest('[data-report]');
         if (rep) {
-            var reason = window.prompt('आप शिकायत क्यों कर रहे हैं? (लिखना ज़रूरी नहीं)', '');
+            var reason = window.prompt(@json(__('आप शिकायत क्यों कर रहे हैं? (लिखना ज़रूरी नहीं)')), '');
             if (reason === null) { return; }
             var fd = new FormData(); fd.append('target_type', rep.dataset.type); fd.append('target_id', rep.dataset.id); fd.append('reason', reason);
-            send(rep.dataset.url, 'POST', fd).then(function (d) { toast(d.message); }).catch(function () { toast('शिकायत नहीं भेज पाए।'); });
+            send(rep.dataset.url, 'POST', fd).then(function (d) { toast(d.message); }).catch(function () { toast(@json(__('शिकायत नहीं भेज पाए।'))); });
             rep.closest('details')?.removeAttribute('open');
             return;
         }
         var del = e.target.closest('[data-post-delete]');
         if (del) {
-            if (!window.confirm('क्या आप यह पोस्ट हटाना चाहते हैं?')) { return; }
+            if (!window.confirm(@json(__('क्या आप यह पोस्ट हटाना चाहते हैं?')))) { return; }
             send(del.dataset.postDelete, 'DELETE').then(function () {
                 var card = del.closest('[data-post]');
-                if (document.body.dataset.single) { location.href = @json(route('home')); } else { card.remove(); toast('पोस्ट हटा दी गई।'); }
-            }).catch(function () { toast('हटा नहीं पाए। दोबारा कोशिश करें।'); });
+                if (document.body.dataset.single) { location.href = @json(route('home')); } else { card.remove(); toast(@json(__('पोस्ट हटा दी गई।'))); }
+            }).catch(function () { toast(@json(__('हटा नहीं पाए। दोबारा कोशिश करें।'))); });
             return;
         }
         var cd = e.target.closest('[data-comment-delete]');
         if (cd) {
-            if (!window.confirm('क्या आप यह कमेंट हटाना चाहते हैं?')) { return; }
+            if (!window.confirm(@json(__('क्या आप यह कमेंट हटाना चाहते हैं?')))) { return; }
             send(cd.dataset.commentDelete, 'DELETE').then(function (d) {
                 var post = cd.closest('[data-post]');
                 cd.closest('[data-comment]').remove();
                 post.querySelector('[data-comment-count]').textContent = d.count;
-            }).catch(function () { toast('हटा नहीं पाए। दोबारा कोशिश करें।'); });
+            }).catch(function () { toast(@json(__('हटा नहीं पाए। दोबारा कोशिश करें।'))); });
             return;
         }
         var more = e.target.closest('[data-load-more]');
         if (more) {
             e.preventDefault();
-            more.disabled = true; more.textContent = 'खुल रहा है...';
+            more.disabled = true; more.textContent = @json(__('खुल रहा है...'));
             var sk = skeleton(); document.getElementById('feed-list').appendChild(sk);
             fetch(more.dataset.next, { headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
                 .then(function (r) { return r.json(); }).then(function (d) {
                     sk.remove();
                     document.getElementById('feed-list').insertAdjacentHTML('beforeend', d.html);
-                    if (d.next) { more.dataset.next = d.next; more.disabled = false; more.textContent = 'और देखें'; } else { more.remove(); }
-                }).catch(function () { sk.remove(); more.disabled = false; more.textContent = 'और देखें'; toast('इंटरनेट में दिक्कत है। दोबारा कोशिश करें।'); });
+                    if (d.next) { more.dataset.next = d.next; more.disabled = false; more.textContent = @json(__('और देखें')); } else { more.remove(); }
+                }).catch(function () { sk.remove(); more.disabled = false; more.textContent = @json(__('और देखें')); toast(@json(__('इंटरनेट में दिक्कत है। दोबारा कोशिश करें।'))); });
         }
     });
 
@@ -112,7 +112,7 @@
             post.querySelector('[data-comments-list]').insertAdjacentHTML('beforeend', d.html);
             post.querySelector('[data-comment-count]').textContent = d.count;
             input.value = '';
-        }).catch(function () { toast('कमेंट नहीं भेज पाए।'); });
+        }).catch(function () { toast(@json(__('कमेंट नहीं भेज पाए।'))); });
     });
 
     // Infinite scroll: auto-click "Load more" when it nears the viewport.

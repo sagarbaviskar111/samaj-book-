@@ -14,10 +14,10 @@
             @if($hasImg)
                 <picture>
                     @if($hasWebp)<source type="image/webp" srcset="{{ asset('images/sant-gadge-maharaj.webp') }}">@endif
-                    <img src="{{ asset($hasPng ? 'images/sant-gadge-maharaj.png' : 'images/sant-gadge-maharaj.webp') }}" alt="संत गाडगे महाराज" width="728" height="1090" loading="lazy" decoding="async" class="relative z-[1] h-full w-full object-contain object-bottom px-3 pb-2 pt-10">
+                    <img src="{{ asset($hasPng ? 'images/sant-gadge-maharaj.png' : 'images/sant-gadge-maharaj.webp') }}" alt="{{ __('संत गाडगे महाराज') }}" width="728" height="1090" loading="lazy" decoding="async" class="relative z-[1] h-full w-full object-contain object-bottom px-3 pb-2 pt-10">
                 </picture>
             @else
-                <svg viewBox="0 0 200 250" class="relative z-[1] h-full w-full" role="img" aria-label="संत गाडगे महाराज (चित्रात्मक)">
+                <svg viewBox="0 0 200 250" class="relative z-[1] h-full w-full" role="img" aria-label="{{ __('संत गाडगे महाराज (चित्रात्मक)') }}">
                     <path d="M0 214c40-10 120-10 200 0v36H0z" fill="#d9c3a0"/>
                     <path d="M62 226c-4-52 6-96 38-100 32 4 42 48 38 100z" fill="#2f5d8c"/>
                     <circle cx="100" cy="108" r="19" fill="#8a6a52"/>
@@ -29,7 +29,7 @@
         {{-- bottom marigold garland --}}
         <div class="absolute -bottom-3 left-1/2 z-[2] flex -translate-x-1/2 items-center gap-1 rounded-full bg-kumkum-700 px-3 py-1 text-gold-200 shadow-soft ring-2 ring-gold-300">
             <svg viewBox="-12 -12 24 24" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">@foreach(range(0,7) as $k)<ellipse cx="0" cy="-6" rx="2.6" ry="4.6" transform="rotate({{ $k*45 }})"/>@endforeach<circle r="3"/></svg>
-            <span class="font-display text-xs">१८७६ &ndash; १९५६</span>
+            <span class="font-display text-xs">{{ __('१८७६ – १९५६') }}</span>
         </div>
     </div>
     @if($caption)

@@ -37,7 +37,7 @@ class NewBiodataAlert
             $user->notify(new GeneralNotification(
                 'new_biodata_area',
                 __('Aapke ilake me nayi profile'),
-                trim($first.($age ? ', '.$age.' saal' : '').' — '.$b->district),
+                trim($first.($age ? ', '.__(':age saal', ['age' => $age]) : '').' — '.$b->district),
                 route('biodata.index', ['for' => $b->gender === 'male' ? 'groom' : 'bride', 'district' => $b->district]),
             ));
         }

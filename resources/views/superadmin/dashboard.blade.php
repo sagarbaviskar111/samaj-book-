@@ -21,7 +21,7 @@
 </div>
 <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
     @foreach([
-        [__('Admins'), $stats['admins'].($stats['admins_blocked'] ? ' ('.$stats['admins_blocked'].' blocked)' : ''), route('superadmin.admins.index')],
+        [__('Admins'), $stats['admins'].($stats['admins_blocked'] ? ' ('.__(':n blocked', ['n' => $stats['admins_blocked']]).')' : ''), route('superadmin.admins.index')],
         [__('Payments this month'), \App\Models\Payment::inr($stats['paid_month']), route('superadmin.payments.index', ['status' => 'paid'])],
         [__('Failed logins (24h)'), $stats['failed_24h'], route('superadmin.logs.security')],
         [__('Members'), $stats['members'].' · '.$stats['subadmins'].' '.__('sub-admins'), route('admin.users.index', ['status' => 'active'])],

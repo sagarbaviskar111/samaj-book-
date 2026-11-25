@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BiodataController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InterestController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\ReportController;
@@ -28,6 +29,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     Route::resource('news', NewsController::class)->except('show')->parameters(['news' => 'id']);
     Route::post('news/{id}/publish', [NewsController::class, 'togglePublish'])->name('news.publish');
+
+    Route::get('interests', [InterestController::class, 'index'])->name('interests.index');
 
     Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
     Route::post('reports/{id}/resolve', [ReportController::class, 'resolve'])->name('reports.resolve');

@@ -9,8 +9,8 @@ use App\Models\User;
 /**
  * Single source of truth for how much of other people's biodata a member may see.
  *   full      owns at least one non-draft biodata (or is admin)
- *   view_only no own submitted biodata, but has a looking-for profile (full viewing, no sending)
- *   lite      neither: photo + first name + age only
+ *   view_only (retired: looking-for no longer unlocks anything)
+ *   lite      no own submitted biodata: nothing of anyone's biodata is shown, only counts + districts
  * Memoized per request (stored on the request so tests/long-lived workers never see stale values).
  */
 class AccessLevel
@@ -34,7 +34,6 @@ class AccessLevel
         }
         $level = match (true) {
             Biodata::where('user_id', $user->id)->where('status', '!=', 'draft')->exists() => self::FULL,
-            LookingForProfile::where('user_id', $user->id)->exists() => self::VIEW_ONLY,
             default => self::LITE,
         };
         $bag->set($key, $level);

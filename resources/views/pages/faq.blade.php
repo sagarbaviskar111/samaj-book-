@@ -1,6 +1,6 @@
 @extends('pages._shell')
-@section('heading', 'अक्सर पूछे जाने वाले प्रश्न')
-@section('sub', 'आपके सवाल, हमारे जवाब।')
+@section('heading', __('अक्सर पूछे जाने वाले प्रश्न'))
+@section('sub', __('आपके सवाल, हमारे जवाब।'))
 
 @section('page')
 @php
@@ -19,10 +19,10 @@
     @foreach ($faqs as [$q, $a])
         <details class="overflow-hidden rounded-2xl border border-gold-200 bg-cream/70 transition">
             <summary class="flex min-h-[3.5rem] cursor-pointer items-center justify-between gap-3 px-4 py-3 text-lg font-bold text-ink-900">
-                <span>{{ $q }}</span>
+                <span>{{ __($q) }}</span>
                 <span class="hr-plus grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gold-100 text-kumkum-700"><svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
             </summary>
-            <p class="px-4 pb-4 text-base leading-relaxed">{{ $a }}</p>
+            <p class="px-4 pb-4 text-base leading-relaxed">{{ __($a) }}</p>
         </details>
     @endforeach
 </div>

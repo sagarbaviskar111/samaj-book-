@@ -28,7 +28,7 @@ class LookingForController extends Controller
         $profile->save();
 
         return redirect()->route('biodata.index', ['for' => $profile->looking_for])
-            ->with('status', 'धन्यवाद! अब आप सभी बायोडाटा पूरी जानकारी के साथ देख सकते हैं।');
+            ->with('status', __('धन्यवाद! अब आप सभी बायोडाटा पूरी जानकारी के साथ देख सकते हैं।'));
     }
 
     public function edit(Request $request)
@@ -47,14 +47,14 @@ class LookingForController extends Controller
         abort_unless($profile, 404);
         $profile->update($this->data($request));
 
-        return redirect()->route('biodata.index', ['for' => $profile->looking_for])->with('status', 'आपकी पसंद बदल दी गई।');
+        return redirect()->route('biodata.index', ['for' => $profile->looking_for])->with('status', __('आपकी पसंद बदल दी गई।'));
     }
 
     public function destroy(Request $request): RedirectResponse
     {
         $this->mine($request)?->delete();
 
-        return redirect()->route('biodata.index')->with('status', 'यह जानकारी हटा दी गई।');
+        return redirect()->route('biodata.index')->with('status', __('यह जानकारी हटा दी गई।'));
     }
 
     private function mine(Request $request): ?LookingForProfile

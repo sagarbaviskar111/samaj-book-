@@ -112,8 +112,8 @@ class BiodataRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'contact_phone.regex' => '10 अंकों का सही मोबाइल नंबर डालिए (जैसे 9876543210)।',
-            'contact_phone.required' => 'बायोडाटा भेजने के लिए संपर्क नंबर ज़रूरी है। (ड्राफ़्ट सेव करने के लिए ज़रूरी नहीं।)',
+            'contact_phone.regex' => __('10 अंकों का सही मोबाइल नंबर डालिए (जैसे 9876543210)।'),
+            'contact_phone.required' => __('बायोडाटा भेजने के लिए संपर्क नंबर ज़रूरी है। (ड्राफ़्ट सेव करने के लिए ज़रूरी नहीं।)'),
         ];
     }
 
@@ -126,7 +126,7 @@ class BiodataRequest extends FormRequest
             }
             $min = self::MIN_AGE[$this->input('gender')] ?? 21;
             if (Carbon::parse($this->input('dob'))->age < $min) {
-                $v->errors()->add('dob', "शादी की क़ानूनी न्यूनतम उम्र ".($this->input('gender') === 'female' ? 'लड़की' : 'लड़के')." के लिए {$min} साल है।");
+                $v->errors()->add('dob', $this->input('gender') === 'female' ? __('शादी की क़ानूनी न्यूनतम उम्र लड़की के लिए :min साल है।', ['min' => $min]) : __('शादी की क़ानूनी न्यूनतम उम्र लड़के के लिए :min साल है।', ['min' => $min]));
             }
         }];
     }
@@ -142,7 +142,7 @@ class BiodataRequest extends FormRequest
         $pada = $this->input('nakshatra_pada');
         $rashi = $this->input('rashi');
         if ($pada && ! $nak) {
-            $e->add('nakshatra', 'चरण के साथ नक्षत्र भी चुनिए।');
+            $e->add('nakshatra', __('चरण के साथ नक्षत्र भी चुनिए।'));
 
             return;
         }
@@ -152,10 +152,10 @@ class BiodataRequest extends FormRequest
         if ($pada) {
             $derived = O::rashiFromNakshatraPada($nak, $pada);
             if ($derived !== $rashi) {
-                $e->add('rashi', 'राशि, नक्षत्र और चरण से मेल नहीं खाती। सही राशि: '.(O::rashis()[$derived] ?? '').'।');
+                $e->add('rashi', __('राशि, नक्षत्र और चरण से मेल नहीं खाती। सही राशि: :rashi।', ['rashi' => O::rashis()[$derived] ?? '']));
             }
         } elseif (! in_array($rashi, O::rashisForNakshatra($nak), true)) {
-            $e->add('rashi', 'यह नक्षत्र इस राशि में नहीं आता। राशि और नक्षत्र दोबारा देखिए।');
+            $e->add('rashi', __('यह नक्षत्र इस राशि में नहीं आता। राशि और नक्षत्र दोबारा देखिए।'));
         }
     }
 

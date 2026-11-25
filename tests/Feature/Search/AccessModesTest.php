@@ -30,34 +30,31 @@ class AccessModesTest extends SearchTestCase
 
         $this->assertSame('lite', AccessLevel::for($lite));
         $this->assertSame('lite', AccessLevel::for($draftOnly));
-        $this->assertSame('view_only', AccessLevel::for($viewOnly));
+        $this->assertSame('lite', AccessLevel::for($viewOnly)); // looking-for no longer unlocks anything
         $this->assertSame('full', AccessLevel::for($full));
         $this->assertSame('full', AccessLevel::for($admin));
     }
 
-    public function test_lite_search_hides_everything_and_ignores_filters(): void
+    public function test_lite_search_shows_only_counts_and_locations(): void
     {
         $this->girl();
         $this->girl(['name' => 'Rekha Other', 'district' => 'Pune']);
         $me = $this->member();
 
         $r = $this->actingAs($me)->get('/biodata?for=bride&district=Pune&q=Rekha&age_min=40&sort=age')->assertOk();
-        $r->assertSee('Sunita')->assertSee('Rekha'); // filters ignored: both shown
-        $r->assertDontSee('Zendekar')->assertDontSee('Ramesh')->assertDontSee('Quantum')->assertDontSee('Astronaut')
-            ->assertDontSee('Chandanpur')->assertDontSee('Wardha')->assertDontSee('Kashyapx')->assertDontSee('Secret')
-            ->assertDontSee('161 cm')->assertDontSee('161cm')->assertDontSee('% match')->assertDontSee('name="age_min"', false)->assertDontSee('name="q"', false)
-            ->assertDontSee('data-shortlist', false);
-        $r->assertSee('मेरा बायोडाटा बनाएँ');
+        // Counts + district names only (filters ignored: 2 brides in total).
+        $r->assertSee('वर्धा')->assertSee('पुणे')->assertSee('मेरा बायोडाटा बनाएँ');
+        $r->assertDontSee('Sunita')->assertDontSee('Rekha')->assertDontSee('Zendekar')->assertDontSee('Ramesh')->assertDontSee('Quantum')
+            ->assertDontSee('Astronaut')->assertDontSee('Chandanpur')->assertDontSee('Kashyapx')->assertDontSee('Secret')
+            ->assertDontSee('161 cm')->assertDontSee('% match')->assertDontSee('name="age_min"', false)->assertDontSee('name="q"', false)
+            ->assertDontSee('data-shortlist', false)->assertDontSee('/biodata/photo', false);
     }
 
-    public function test_lite_show_hides_everything(): void
+    public function test_lite_cannot_open_anyones_biodata(): void
     {
         $b = $this->girl();
-        $r = $this->actingAs($this->member())->get('/biodata/'.$b->id)->assertOk();
-        $r->assertSee('Sunita')->assertSee((string) $b->dob->age)->assertSee('मेरा बायोडाटा बनाएँ')->assertSee(route('looking-for.create'), false);
-        $r->assertDontSee('Zendekar')->assertDontSee('Ramesh')->assertDontSee('Quantum')->assertDontSee('Astronaut')
-            ->assertDontSee('Chandanpur')->assertDontSee('Wardha')->assertDontSee('Secret')->assertDontSee('पसंद भेजें')
-            ->assertDontSee('9123456780');
+        $this->actingAs($this->member())->get('/biodata/'.$b->id)
+            ->assertRedirect(route('biodata.index', ['for' => 'bride']));
     }
 
     public function test_lite_cannot_shortlist_or_send(): void
@@ -69,17 +66,15 @@ class AccessModesTest extends SearchTestCase
         $this->assertSame(0, Interest::count());
     }
 
-    public function test_view_only_sees_full_but_cannot_send(): void
+    public function test_looking_for_does_not_unlock_biodata(): void
     {
         $b = $this->girl();
         $me = $this->member();
         LookingForProfile::create(['user_id' => $me->id, 'for_whom' => 'brother', 'looking_for' => 'bride']);
 
-        $this->actingAs($me)->get('/biodata/'.$b->id)->assertOk()->assertSee('Zendekar')->assertSee('Quantum')
-            ->assertSee('पसंद भेजने के लिए पहले अपना बायोडाटा बनाइए')->assertDontSee('name="from_biodata_id"', false);
-        $this->get('/biodata?for=bride&nd=1')->assertOk()->assertSee('Sunita')->assertSee('भाई');
-        $this->post('/interests', ['from_biodata_id' => $b->id, 'to_biodata_id' => $b->id])
-            ->assertSessionHas('error', fn ($m) => str_contains($m, 'बायोडाटा बनाइए'));
+        $this->actingAs($me)->get('/biodata/'.$b->id)->assertRedirect();
+        $this->get('/biodata?for=bride&nd=1')->assertOk()->assertDontSee('Sunita')->assertDontSee('Zendekar')->assertSee('मेरा बायोडाटा बनाएँ');
+        $this->post('/interests', ['from_biodata_id' => $b->id, 'to_biodata_id' => $b->id])->assertSessionHas('error');
         $this->assertSame(0, Interest::count());
     }
 
@@ -104,9 +99,7 @@ class AccessModesTest extends SearchTestCase
             ->assertRedirect();
         $this->assertSame(1, LookingForProfile::where('user_id', $me->id)->count());
 
-        $this->get('/biodata')->assertOk()->assertSee('Zoya')->assertDontSee('Wanda')->assertSee('बेटी')->assertSee('बदलें');
-        // explicit filters override the defaults
-        $this->get('/biodata?for=bride&district=Pune')->assertSee('Wanda')->assertDontSee('Zoya');
+        $this->get('/biodata')->assertOk()->assertDontSee('Zoya')->assertDontSee('Wanda')->assertSee('मेरा बायोडाटा बनाएँ');
 
         $this->get('/looking-for')->assertRedirect(route('looking-for.edit'));
         $this->put('/looking-for', ['for_whom' => 'son', 'looking_for' => 'groom'])->assertRedirect();

@@ -44,10 +44,19 @@ class FeedController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $posts = self::visibleTo($user)
-            ->with(['user:id,name,city,avatar', 'comments' => fn ($q) => $q->with('user:id,name,avatar')->limit(3)])
-            ->latest('id')
-            ->paginate(10)->withQueryString();
+        $tab = $request->query('tab') === 'following' ? 'following' : 'for-you';
+        $followingSub = "select following_id from follows where follower_id = ".(int) $user->id;
+
+        $q = self::visibleTo($user)
+            ->with(['user:id,name,city,avatar', 'comments' => fn ($q) => $q->with('user:id,name,avatar')->limit(3)]);
+        if ($tab === 'following') {
+            // only people I follow (plus my own posts)
+            $q->where(fn ($w) => $w->whereRaw("posts.user_id in ($followingSub)")->orWhere('posts.user_id', $user->id));
+        } else {
+            // Instagram-style: posts of people I follow from the last 7 days come first, then everything else by time.
+            $q->orderByRaw("case when posts.user_id in ($followingSub) and posts.created_at >= ? then 0 else 1 end", [now()->subDays(7)->toDateTimeString()]);
+        }
+        $posts = $q->latest('id')->paginate(10)->withQueryString();
         self::decorate($posts, $user);
 
         if ($request->ajax() || $request->wantsJson()) {
@@ -70,6 +79,14 @@ class FeedController extends Controller
                 ->map(fn ($e) => ['id' => $e->id, 'title' => $e->title, 'at' => $e->event_at?->timestamp])->all();
         });
 
-        return view('feed.index', compact('posts', 'stories', 'upcoming'));
+        // Members worth following: most-followed active members I don't follow yet (same city first).
+        $suggestions = $user->isPending() ? collect() : \App\Models\User::query()
+            ->where('role', 'user')->where('status', 'active')->where('id', '!=', $user->id)
+            ->whereRaw("id not in ($followingSub)")
+            ->withCount('followers')
+            ->orderByRaw('case when city = ? then 0 else 1 end', [$user->city ?? ''])
+            ->orderByDesc('followers_count')->latest('id')->limit(5)->get(['id', 'name', 'city', 'avatar']);
+
+        return view('feed.index', compact('posts', 'stories', 'upcoming', 'tab', 'suggestions'));
     }
 }

@@ -104,17 +104,26 @@ class BiodataSearchController extends Controller
         ]);
     }
 
-    /** Lite mode: only the bride/groom tab and pagination. No filters, sort, keyword, match % (all ignored). */
+    /**
+     * Locked mode (member has no biodata): NO biodata is listed. Only counts and district names are shown,
+     * with a push to create their own biodata first.
+     */
     private function lite(Request $request)
     {
         $for = $request->query('for') === 'groom' ? 'groom' : 'bride';
-        $biodatas = Biodata::approved()->where('gender', $for === 'bride' ? 'female' : 'male')
-            ->whereNotIn('user_id', [$request->user()->id])->with('primaryPhoto')
-            ->orderByDesc('id')->paginate(self::PER_PAGE)->appends(['for' => $for]);
+        $base = fn (string $gender) => Biodata::approved()->where('gender', $gender)->whereNotIn('user_id', [$request->user()->id]);
 
-        return view('search.index', [
-            'for' => $for, 'biodatas' => $biodatas, 'opts' => [], 'chips' => [], 'shortlistIds' => [], 'interestMap' => [],
-            'matches' => [], 'f' => [], 'sort' => 'newest', 'hasOwn' => false, 'lite' => true,
+        $labels = BiodataOptions::districtLabels();
+        $byDistrict = $base($for === 'bride' ? 'female' : 'male')->whereNotNull('district')->where('district', '!=', '')
+            ->selectRaw('district, count(*) as c')->groupBy('district')->orderByDesc('c')->pluck('c', 'district')
+            ->mapWithKeys(fn ($c, $d) => [($labels[$d] ?? $d) => $c])->all();
+
+        return view('search.locked', [
+            'for' => $for,
+            'total' => array_sum($byDistrict) + $base($for === 'bride' ? 'female' : 'male')->where(fn ($q) => $q->whereNull('district')->orWhere('district', ''))->count(),
+            'brides' => $base('female')->count(),
+            'grooms' => $base('male')->count(),
+            'byDistrict' => $byDistrict,
         ]);
     }
 
@@ -221,17 +230,17 @@ class BiodataSearchController extends Controller
     {
         $labels = [
             'q' => fn ($v) => '"'.$v.'"',
-            'age_min' => fn ($v) => 'उम्र '.$v.' से ज़्यादा', 'age_max' => fn ($v) => 'उम्र '.$v.' तक',
-            'height_min' => fn ($v) => 'कद '.$v.' cm से ऊपर', 'height_max' => fn ($v) => 'कद '.$v.' cm तक',
-            'education_level' => fn ($v) => 'पढ़ाई: '.($opts['education'][$v] ?? $v),
-            'occupation_type' => fn ($v) => 'नौकरी: '.($opts['occupation'][$v] ?? $v),
+            'age_min' => fn ($v) => __('उम्र :v से ज़्यादा', ['v' => $v]), 'age_max' => fn ($v) => __('उम्र :v तक', ['v' => $v]),
+            'height_min' => fn ($v) => __('कद :v cm से ऊपर', ['v' => $v]), 'height_max' => fn ($v) => __('कद :v cm तक', ['v' => $v]),
+            'education_level' => fn ($v) => __('पढ़ाई: :v', ['v' => $opts['education'][$v] ?? $v]),
+            'occupation_type' => fn ($v) => __('नौकरी: :v', ['v' => $opts['occupation'][$v] ?? $v]),
             'marital_status' => fn ($v) => $opts['marital'][$v] ?? $v,
-            'income_range' => fn ($v) => 'आमदनी: '.($opts['income'][$v] ?? $v),
-            'manglik' => fn ($v) => $v === '1' ? 'मांगलिक' : 'मांगलिक नहीं',
-            'district' => fn ($v) => 'ज़िला: '.(BiodataOptions::districtLabels()[$v] ?? $v), 'area' => fn ($v) => 'इलाक़ा: '.$v, 'state' => fn ($v) => 'राज्य: '.$v,
-            'current_city' => fn ($v) => 'शहर: '.$v, 'gotra' => fn ($v) => 'गोत्र: '.$v,
-            'verified' => fn ($v) => 'सिर्फ़ जाँचे हुए', 'with_photo' => fn ($v) => 'फ़ोटो वाले',
-            'new_days' => fn ($v) => 'नए ('.$v.' दिन)',
+            'income_range' => fn ($v) => __('आमदनी: :v', ['v' => $opts['income'][$v] ?? $v]),
+            'manglik' => fn ($v) => $v === '1' ? __('मांगलिक') : __('मांगलिक नहीं'),
+            'district' => fn ($v) => __('ज़िला: :v', ['v' => BiodataOptions::districtLabels()[$v] ?? $v]), 'area' => fn ($v) => __('इलाक़ा: :v', ['v' => $v]), 'state' => fn ($v) => __('राज्य: :v', ['v' => BiodataOptions::states()[$v] ?? $v]),
+            'current_city' => fn ($v) => __('शहर: :v', ['v' => $v]), 'gotra' => fn ($v) => __('गोत्र: :v', ['v' => $v]),
+            'verified' => fn ($v) => __('सिर्फ़ जाँचे हुए'), 'with_photo' => fn ($v) => __('फ़ोटो वाले'),
+            'new_days' => fn ($v) => __('नए (:v दिन)', ['v' => $v]),
         ];
         $chips = [];
         foreach ($labels as $key => $fn) {
@@ -240,7 +249,7 @@ class BiodataSearchController extends Controller
             }
         }
         if (! $f['ex_gotra']) {
-            $chips[] = ['label' => 'अपना गोत्र भी शामिल', 'url' => $r->fullUrlWithoutQuery(['ex_gotra', 'page'])];
+            $chips[] = ['label' => __('अपना गोत्र भी शामिल'), 'url' => $r->fullUrlWithoutQuery(['ex_gotra', 'page'])];
         }
 
         return $chips;

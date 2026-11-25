@@ -19,7 +19,7 @@
                 <div class="flex flex-wrap gap-1">
                     <span class="{{ $e->is_published ? 'badge-ok' : 'badge-warn' }}">{{ $e->is_published ? __('Live') : __('Draft') }}</span>
                     <span class="badge-ink">{{ $e->area ?: __('All areas') }}</span>
-                    @if($e->popup_enabled)<span class="badge-ink">{{ __('Popup') }} / {{ $e->reminder_interval_min }} min</span>@endif
+                    @if($e->popup_enabled)<span class="badge-ink">{{ __('Popup') }} / {{ $e->reminder_interval_min }} {{ __('min') }}</span>@endif
                 </div>
                 <p class="mt-1 line-clamp-2 font-semibold text-ink-900">{{ $e->title }}</p>
                 <p class="text-xs text-ink-500">{{ $e->startsHuman() }}@if($e->place) · {{ $e->place }}@endif</p>

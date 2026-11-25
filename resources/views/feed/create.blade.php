@@ -70,7 +70,7 @@
     });
     clr.addEventListener('click', function () {
         inp.value = ''; p.classList.add('hidden'); p.removeAttribute('src');
-        icon.classList.remove('hidden'); clr.classList.add('hidden'); hint.textContent = 'फ़ोटो जोड़ने के लिए यहाँ दबाएँ';
+        icon.classList.remove('hidden'); clr.classList.add('hidden'); hint.textContent = @json(__('फ़ोटो जोड़ने के लिए यहाँ दबाएँ'));
     });
     function count() { cnt.textContent = body.value.length; }
     body.addEventListener('input', count); count();

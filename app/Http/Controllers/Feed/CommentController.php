@@ -22,7 +22,7 @@ class CommentController extends Controller
         if ($post->user_id !== $user->id) {
             $post->user->notify(new GeneralNotification(
                 'comment',
-                $user->name.' commented on your post',
+                __(':name commented on your post', ['name' => $user->name]),
                 mb_strimwidth($comment->body, 0, 100, '...'),
                 route('posts.show', $post)
             ));
@@ -36,7 +36,7 @@ class CommentController extends Controller
             ], 201);
         }
 
-        return back()->with('status', 'Comment added.');
+        return back()->with('status', __('Comment added.'));
     }
 
     public function destroy(Request $request, Comment $comment)
@@ -54,6 +54,6 @@ class CommentController extends Controller
             return response()->json(['ok' => true, 'count' => (int) Post::whereKey($post->id)->value('comments_count')]);
         }
 
-        return back()->with('status', 'Comment removed.');
+        return back()->with('status', __('Comment removed.'));
     }
 }

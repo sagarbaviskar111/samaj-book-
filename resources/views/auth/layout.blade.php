@@ -22,8 +22,8 @@
                 <x-brand.kalash class="mb-2 h-24 w-auto" />
             </div>
             <p class="font-brand text-lg text-gold-200">॥ श्री गणेशाय नमः ॥</p>
-            <h2 class="hr-brand mt-3 max-w-md text-3xl xl:text-4xl">स्वागत है, <span class="text-gold-300">अपनों के बीच</span></h2>
-            <p class="mt-2 max-w-md text-base text-kumkum-100/85">धोबी (रजक) समाज का अपना परिवार, जहाँ रिश्ते भरोसे से जुड़ते हैं।</p>
+            <h2 class="hr-brand mt-3 max-w-md text-3xl xl:text-4xl">{{ __('स्वागत है,') }} <span class="text-gold-300">{{ __('अपनों के बीच') }}</span></h2>
+            <p class="mt-2 max-w-md text-base text-kumkum-100/85">{{ __('धोबी (रजक) समाज का अपना परिवार, जहाँ रिश्ते भरोसे से जुड़ते हैं।') }}</p>
             <ul class="mt-7 max-w-md space-y-4">
                 @foreach ([
                     ['एडमिन द्वारा जाँचे हुए सदस्य', 'हर सदस्य और बायोडाटा की जाँच होती है।', 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4'],
@@ -32,14 +32,14 @@
                 ] as [$t, $d, $p])
                     <li class="flex items-start gap-3">
                         <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gold-400 text-kumkum-900"><svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ $p }}"/></svg></span>
-                        <span><span class="block text-base font-semibold">{{ $t }}</span><span class="block text-base text-kumkum-100/80">{{ $d }}</span></span>
+                        <span><span class="block text-base font-semibold">{{ __($t) }}</span><span class="block text-base text-kumkum-100/80">{{ __($d) }}</span></span>
                     </li>
                 @endforeach
             </ul>
         </div>
 
         <p class="relative z-[2] mt-8 hidden items-center gap-2 text-sm text-gold-200 lg:flex">
-            <x-brand.broom-gadga show="both" class="h-6 w-auto" /> संत गाडगे महाराज की प्रेरणा से &middot; &copy; {{ date('Y') }} {{ config('app.name') }}
+            <x-brand.broom-gadga show="both" class="h-6 w-auto" /> {{ __('संत गाडगे महाराज की प्रेरणा से') }} &middot; &copy; {{ date('Y') }} {{ config('app.name') }}
         </p>
     </aside>
 

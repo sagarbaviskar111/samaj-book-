@@ -44,7 +44,7 @@ class LandingController extends Controller
         $stories = SuccessStory::where('is_published', true)->latest()->take(6)->get();
 
         return view('landing.index', [
-            'title' => 'अपनों के बीच जीवनसाथी की तलाश',
+            'title' => __('अपनों के बीच जीवनसाथी की तलाश'),
             'transparentNav' => true,
             'stats' => [
                 'members' => $this->friendly($stats['members']),

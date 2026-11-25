@@ -28,7 +28,7 @@
                     <p class="truncate font-semibold text-ink-900">{{ $b->name }}</p>
                     @include('admin.partials.status', ['s' => $b->status])
                 </div>
-                <p class="text-xs text-ink-500">{{ ucfirst($b->gender) }} · {{ $b->dob?->age }} yrs · {{ $b->district ?: '—' }}</p>
+                <p class="text-xs text-ink-500">{{ __(ucfirst($b->gender)) }} · {{ $b->dob?->age }} {{ __('yrs') }} · {{ $b->district ?: '—' }}</p>
                 <p class="mt-1 truncate text-xs text-ink-400">{{ __('By') }} {{ $b->user?->name }} ({{ $b->added_by }})</p>
                 <div class="mt-1.5 flex flex-wrap gap-1">
                     @if($b->verified)<span class="badge-ok">{{ __('Verified') }}</span>@endif

@@ -45,14 +45,14 @@ class NotificationController extends Controller
     {
         $request->user()->unreadNotifications->markAsRead();
 
-        return redirect()->route('notifications.index')->with('status', 'All notifications marked as read.');
+        return redirect()->route('notifications.index')->with('status', __('All notifications marked as read.'));
     }
 
     public function settings(Request $request)
     {
         return view('notifications.settings', [
             'prefs' => NotificationPrefs::for($request->user()),
-            'labels' => NotificationPrefs::GROUPS,
+            'labels' => array_map(fn ($l) => __($l), NotificationPrefs::GROUPS),
             'pushReady' => PushService::configured(),
             'vapidPublic' => env('VAPID_PUBLIC_KEY'),
         ]);
@@ -62,7 +62,7 @@ class NotificationController extends Controller
     {
         NotificationPrefs::save($request->user(), (array) $request->input('prefs', []));
 
-        return redirect()->route('notifications.settings')->with('status', 'Notification settings saved.');
+        return redirect()->route('notifications.settings')->with('status', __('Notification settings saved.'));
     }
 
     /** Only allow same-host redirects. */

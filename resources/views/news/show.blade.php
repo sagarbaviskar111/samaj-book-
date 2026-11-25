@@ -15,7 +15,7 @@
 
         <div class="p-5 sm:p-7">
             <div class="flex flex-wrap items-center gap-2">
-                <span class="badge-ink">{{ ucfirst($item->type) }}</span>
+                <span class="badge-ink">{{ __(ucfirst($item->type)) }}</span>
                 <span class="text-sm text-ink-700">{{ $item->created_at->format('d M Y') }}</span>
                 @if($item->area)<span class="badge-warn">{{ $item->area }}</span>@endif
             </div>
@@ -42,7 +42,7 @@
             @foreach($more as $m)
                 <a href="{{ route('news.show', $m) }}" class="card-pad flex items-center justify-between gap-3 hover:bg-gold-50">
                     <span class="text-base font-semibold text-ink-900">{{ $m->title }}</span>
-                    <span class="badge-ink shrink-0">{{ ucfirst($m->type) }}</span>
+                    <span class="badge-ink shrink-0">{{ __(ucfirst($m->type)) }}</span>
                 </a>
             @endforeach
         </div>

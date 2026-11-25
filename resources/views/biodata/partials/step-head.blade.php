@@ -11,7 +11,7 @@
 <div class="mb-4 flex items-start gap-3">
     <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-kumkum-600 to-kumkum-400 text-white shadow-glow"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $paths[$icon] ?? $paths['person'] }}"/></svg></span>
     <div class="min-w-0">
-        <h2 class="font-display text-xl font-bold leading-tight text-ink-900">चरण {{ $n }}: {{ $title }}</h2>
-        <p class="mt-0.5 text-base text-ink-700">{{ $help }}</p>
+        <h2 class="font-display text-xl font-bold leading-tight text-ink-900">{{ __('चरण :n', ['n' => $n]) }}: {{ __($title) }}</h2>
+        <p class="mt-0.5 text-base text-ink-700">{{ __($help) }}</p>
     </div>
 </div>

@@ -1,3 +1,8 @@
+@php
+    $sbPwTxt = json_encode(['', __('कमज़ोर'), __('ठीक-ठाक'), __('अच्छा'), __('मज़बूत')], JSON_UNESCAPED_UNICODE);
+    $sbPwOk = json_encode('✓ '.__('मिल गया'), JSON_UNESCAPED_UNICODE);
+    $sbPwBad = json_encode('✗ '.__('मेल नहीं खाते'), JSON_UNESCAPED_UNICODE);
+@endphp
 @extends('auth.layout')
 @section('card')
 @php
@@ -93,12 +98,18 @@
         <div class="grid gap-4 sm:grid-cols-2">
             <div>
                 <label for="state" class="field-label">{{ __('राज्य') }}</label>
-                <input id="state" name="state" value="{{ old('state') }}" required class="input min-h-[3.25rem] text-base {{ $err('state') }}">
+                <select id="state" name="state" required class="input min-h-[3.25rem] text-base {{ $err('state') }}">
+                    <option value="">{{ __('चुनें') }}</option>
+                    @foreach (\App\Support\BiodataOptions::states() as $k => $l)<option value="{{ $k }}" @selected(old('state') === $k)>{{ $l }}</option>@endforeach
+                </select>
                 @error('state')<p class="field-error flex items-center gap-1">{!! $warnIcon !!}{{ $message }}</p>@enderror
             </div>
             <div>
                 <label for="district" class="field-label">{{ __('ज़िला') }}</label>
-                <input id="district" name="district" value="{{ old('district') }}" required class="input min-h-[3.25rem] text-base {{ $err('district') }}">
+                <select id="district" name="district" required class="input min-h-[3.25rem] text-base {{ $err('district') }}">
+                    <option value="">{{ __('चुनें') }}</option>
+                    @foreach (\App\Support\BiodataOptions::districtLabels() as $k => $l)<option value="{{ $k }}" @selected(old('district') === $k)>{{ $l }}</option>@endforeach
+                </select>
                 @error('district')<p class="field-error flex items-center gap-1">{!! $warnIcon !!}{{ $message }}</p>@enderror
             </div>
             <div>
@@ -147,13 +158,13 @@
         var v = pw.value, s = 0;
         if (v.length >= 8) s++; if (/[A-Z]/.test(v) && /[a-z]/.test(v)) s++; if (/\d/.test(v)) s++; if (/[^A-Za-z0-9]/.test(v)) s++;
         if (!v) s = 0;
-        var cols = ['', '#c8273a', '#ee9e0a', '#f9b81c', '#2f7d57'], txt = ['', 'कमज़ोर', 'ठीक-ठाक', 'अच्छा', 'मज़बूत'];
+        var cols = ['', '#c8273a', '#ee9e0a', '#f9b81c', '#2f7d57'], txt = {!! $sbPwTxt !!};
         pwbar.style.width = (s * 25) + '%'; pwbar.style.backgroundColor = cols[s]; pwtxt.textContent = v ? txt[s] : '';
     }
     function match() {
         if (!pc.value) { pwm.textContent = ''; return; }
         var ok = pc.value === pw.value;
-        pwm.textContent = ok ? '✓ मिल गया' : '✗ मेल नहीं खाते';
+        pwm.textContent = ok ? {!! $sbPwOk !!} : {!! $sbPwBad !!};
         pwm.style.color = ok ? '#2f7d57' : '#b8262b';
     }
     form.addEventListener('input', function () { progress(); strength(); match(); });
